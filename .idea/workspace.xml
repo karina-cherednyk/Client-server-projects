@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c0e76950-79ca-411a-af04-c76cb257ab4b" name="Default Changelist" comment="">
+    <list default="true" id="c0e76950-79ca-411a-af04-c76cb257ab4b" name="Default Changelist" comment="add threads, warehouse class, group class ,product class">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/network/BlowfishCipherProcessor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/network/CipherProcessor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/network/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/network/Network.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/network/Processor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/network/TCPNetwork.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/storage/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/storage/ProductGroup.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/storage/Warehouse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project01.iml" beforeDir="false" afterPath="$PROJECT_DIR$/project01.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/CRC16.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/CRC16.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Package.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/Package.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MainTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Lab01Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/CRC16.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Package.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/MainTest.class" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,14 +31,35 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1c3NAtWM5Wa4pf7t80DEOnlKKa5" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -34,6 +73,30 @@
       </list>
     </option>
   </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="project01" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Lab01Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project01" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="Lab01Test" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.Lab01Test" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -46,6 +109,8 @@
       <updated>1589753176901</updated>
       <workItem from="1589753180190" duration="293000" />
       <workItem from="1589753534863" duration="238000" />
+      <workItem from="1590414642078" duration="42000" />
+      <workItem from="1590428855230" duration="11286000" />
     </task>
     <servers />
   </component>
@@ -64,5 +129,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add threads, warehouse class, group class ,product class" />
+    <option name="LAST_COMMIT_MESSAGE" value="add threads, warehouse class, group class ,product class" />
   </component>
 </project>

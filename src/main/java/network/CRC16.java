@@ -1,5 +1,7 @@
+package network;
+
 public class CRC16 {
-    static int[] table = {
+    private static int[] table = {
             0x0000, 0xC0C1, 0xC181, 0x0140, 0xC301, 0x03C0, 0x0280, 0xC241,
             0xC601, 0x06C0, 0x0780, 0xC741, 0x0500, 0xC5C1, 0xC481, 0x0440,
             0xCC01, 0x0CC0, 0x0D80, 0xCD41, 0x0F00, 0xCFC1, 0xCE81, 0x0E40,
@@ -34,7 +36,7 @@ public class CRC16 {
             0x8201, 0x42C0, 0x4380, 0x8341, 0x4100, 0x81C1, 0x8081, 0x4040,
     };
 
-    public static short getCrc(byte[] bytes, int offset, int length) {
+    static short getCrc(byte[] bytes, int offset, int length) {
 
         int crc = 0x0000;
         for(int i=0; i<length; i++){

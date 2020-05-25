@@ -1,20 +1,19 @@
+import network.BlowfishCipherProcessor;
+import network.CRC16;
+import network.Package;
 import org.apache.commons.codec.Charsets;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import java.io.BufferedReader;
-import java.lang.reflect.Array;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.security.InvalidKeyException;
-import java.util.Arrays;
 import java.util.Random;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
-public class MainTest {
+public class Lab01Test {
     private Package test1 = new Package((byte) 1,2,3,4,"test message");
     private byte[] test1arr;
     private  Package test2;
@@ -22,7 +21,7 @@ public class MainTest {
 
 
     @Before
-    public void init() throws BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
+    public void init() throws Exception {
         test1arr = fillArr((byte)1, 2, 3, 4, "test message");
 
         Random r = new Random(System.currentTimeMillis());
@@ -34,13 +33,13 @@ public class MainTest {
         test2arr = fillArr(a,b,c,d,"rand");
     }
 
-    public  byte[] fillArr(byte bSrc, long bPktId, int cType, int bUserId, String msg) throws BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
+    private byte[] fillArr(byte bSrc, long bPktId, int cType, int bUserId, String msg) throws Exception {
         byte[] message = msg.getBytes(Charsets.UTF_8);
         byte[] bMsq = ByteBuffer.allocate(message.length+8).order(ByteOrder.BIG_ENDIAN)
                 .putInt(cType).putInt(bUserId).put(message).array();
 
 
-        bMsq = Main.encrypt(bMsq);
+        bMsq = BlowfishCipherProcessor.encryptCipher(bMsq);
 
         short crc2 = CRC16.getCrc(bMsq);
 
@@ -61,21 +60,31 @@ public class MainTest {
 
         return res;
     }
-
+    static  int c;
     @Test
-    public void decode1() throws BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
-       assertEquals(test1, Main.decode(test1arr));
+    public void decode1() throws Exception {
+       assertEquals(test1, BlowfishCipherProcessor.decode(test1arr));
     }
     @Test
-    public void decode2() throws BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
-        assertEquals(test2, Main.decode(test2arr));
+    public void decode2() throws Exception {
+        assertEquals(test2, BlowfishCipherProcessor.decode(test2arr));
     }
     @Test
-    public void encode1() throws BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
-        assertArrayEquals(Main.encode(test1), test1arr);
+    public void encode1() throws Exception {
+        assertArrayEquals(BlowfishCipherProcessor.encode(test1), test1arr);
     }
     @Test
-    public void encode2() throws BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
-        assertArrayEquals(Main.encode(test2), test2arr);
+    public void encode2() throws Exception {
+        assertArrayEquals(BlowfishCipherProcessor.encode(test2), test2arr);
+    }
+    @Test
+    public void counter() throws Exception {
+        for(int i=0; i<30; ++i){
+            Package p  = BlowfishCipherProcessor.decode(fillArr((byte)i,i,i,i,"test"));
+            System.out.println(p);
+            BlowfishCipherProcessor.encode(p);
+            BlowfishCipherProcessor.getInstance().encrypt(p);
+            System.out.println("success");
+        }
     }
 }
