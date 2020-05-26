@@ -2,36 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c0e76950-79ca-411a-af04-c76cb257ab4b" name="Default Changelist" comment="add threads, warehouse class, group class ,product class">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_5_7_0_M1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_7_0_M1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_7_0_M1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_params_5_7_0_M1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_7_0_M1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_7_0_M1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_opentest4j_opentest4j_1_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/PackageGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/Lab02Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project01.iml" beforeDir="false" afterPath="$PROJECT_DIR$/project01.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/BlowfishCipherProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/PackageProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/CipherProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/CipherProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/Network.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/network/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/Processor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/network/TCPNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/TCPNetwork.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/storage/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/storage/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/storage/ProductGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/storage/ProductGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/storage/Warehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/storage/Warehouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Lab01Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Lab01Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="project01" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -124,6 +106,8 @@
       <workItem from="1590414642078" duration="42000" />
       <workItem from="1590428855230" duration="11595000" />
       <workItem from="1590514124587" duration="8656000" />
+      <workItem from="1590523146184" duration="85000" />
+      <workItem from="1590523737580" duration="491000" />
     </task>
     <task id="LOCAL-00001" summary="add threads, warehouse class, group class ,product class">
       <created>1590440685227</created>
