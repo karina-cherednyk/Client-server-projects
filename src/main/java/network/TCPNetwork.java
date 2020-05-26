@@ -25,11 +25,14 @@ public class TCPNetwork implements Network {
         threadPoolReceive.execute(()-> {
             try {
                 Package pack = PackageProcessor.decode(message);
+                System.out.println("Message "+pack.getBmsq()+" was received");
                 Processor.process(pack.getBmsq());
             } catch (MagicByteException e) {
                 System.err.println("Package was broken: "+e);
+                Processor.processFail();
             }catch (WrongCrcException w){
                 System.err.println("Package was broken: "+w);
+                Processor.processFail();
             }catch (Exception e){
                 e.printStackTrace();
             }
