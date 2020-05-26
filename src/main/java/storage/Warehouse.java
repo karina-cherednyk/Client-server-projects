@@ -2,8 +2,9 @@ package storage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Warehouse {
 
@@ -11,8 +12,8 @@ public class Warehouse {
         getQuantity, reduceQuantity, addQuantity, addGroup, addProduct, setPrice
     }
 
-    private List<ProductGroup> groups = new ArrayList<>();
-    private HashMap<String,ProductGroup> map = new HashMap<>();
+    private List<ProductGroup> groups = new CopyOnWriteArrayList<>();
+    private ConcurrentHashMap<String,ProductGroup> map = new ConcurrentHashMap<>();
 
     public int getQuantity(String productName){
         if(!map.containsKey(productName)) return 0;

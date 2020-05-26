@@ -2,48 +2,33 @@ package network;
 
 import org.apache.commons.codec.Charsets;
 
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.security.Key;
+import java.security.NoSuchAlgorithmException;
 
-public class BlowfishCipherProcessor implements CipherProcessor{
-    private static  Cipher cipher;
-    private static Key key;
-    private static BlowfishCipherProcessor instance;
-    static
-    {
+
+class MagicByteException extends  Exception{
+    public MagicByteException(byte val){super("Magic byte expected got "+val);}
+};
+class WrongCrcException extends  Exception{
+    public WrongCrcException(String s){super(s);}
+};
+
+public class PackageProcessor {
+    public  static  CipherProcessor processor;
+
+    static {
         try {
-            cipher = Cipher.getInstance("Blowfish");
-            key = KeyGenerator.getInstance("Blowfish").generateKey();
-
-        } catch (Exception e) { e.printStackTrace(); }
-
+            processor = new CipherProcessor();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
-    private BlowfishCipherProcessor(){}
-    public static BlowfishCipherProcessor getInstance(){
-        if(instance == null) instance = new BlowfishCipherProcessor();
-        return instance;
-    }
-
-    public void decrypt(byte[] pack) throws Exception{
-        System.out.println(decode(pack));
-    }
-    public byte[] encrypt(Package pack) throws Exception{
-        return encode(pack);
-    }
-
 
     //lab 01
-    public synchronized static  byte[] encryptCipher(byte[] input) throws Exception {
-        cipher.init(Cipher.ENCRYPT_MODE,key);
-        return cipher.doFinal(input);
-    }
-    private synchronized static  byte[] decryptCipher(byte[] input) throws Exception {
-        cipher.init(Cipher.DECRYPT_MODE,key);
-        return cipher.doFinal(input);
-    }
 
     public static byte[] encode(byte bSrc, long bPktId, int cType, int bUserId, String message) throws  Exception {
         byte[] bMessage = message.getBytes(Charsets.UTF_8);
@@ -52,7 +37,7 @@ public class BlowfishCipherProcessor implements CipherProcessor{
                 .putInt(cType).putInt(bUserId).put(bMessage).array();
 
         //encrypt message
-        bMsq = encryptCipher(bMsq);
+        bMsq = processor.encrypt(bMsq);
 
         byte bMagic = 0x13;
 
@@ -77,21 +62,23 @@ public class BlowfishCipherProcessor implements CipherProcessor{
 
     //if package is incorrect throw IllegalArgumentException
     public static Package decode(byte[] input) throws Exception {
-        byte bMagic = input[0];
-        if(bMagic!= 0x13)
-            throw new IllegalArgumentException("Magic byte expected");
 
-        byte bSrc = input[1];
-        long bPktId = ByteBuffer.wrap(input,2,8).order(ByteOrder.BIG_ENDIAN).getLong();
-        int wLen = ByteBuffer.wrap(input,10,4).order(ByteOrder.BIG_ENDIAN).getInt();
+        ByteBuffer wrapper = ByteBuffer.wrap(input).order(ByteOrder.BIG_ENDIAN);
+        byte bMagic = wrapper.get();
+        if(bMagic!= 0x13)
+            throw new MagicByteException(bMagic);
+
+        byte bSrc = wrapper.get();
+        long bPktId = wrapper.getLong();
+        int wLen = wrapper.getInt();
 
 
         //-----check 1 ------//
-        short expectedCrc1 = ByteBuffer.wrap(input,14,2).order(ByteOrder.BIG_ENDIAN).getShort();
+        short expectedCrc1 = wrapper.getShort();
         short actualCrc1 = CRC16.getCrc(input,0,14);
 
         if(expectedCrc1 != actualCrc1)
-            throw new IllegalArgumentException("First crc check was not passed\n" +
+            throw new WrongCrcException("First crc check was not passed\n" +
                     "Expected crc: "+expectedCrc1+", actual crc:"+actualCrc1
             );
 
@@ -101,20 +88,22 @@ public class BlowfishCipherProcessor implements CipherProcessor{
         short actualCrc2 =  CRC16.getCrc(input,16,wLen);
 
         if(expectedCrc2 != actualCrc2)
-            throw new IllegalArgumentException("Second crc check was not passed\n" +
+            throw new WrongCrcException("Second crc check was not passed\n" +
                     "Expected crc: "+expectedCrc2+", actual crc:"+actualCrc2
             );
 
         //decrypt message
         byte[] bMsq = new byte[wLen];
         System.arraycopy(input, 16, bMsq,0,wLen);
-        bMsq = decryptCipher(bMsq);
+        bMsq = processor.decrypt(bMsq);
 
         //parse message
-        int cType = ByteBuffer.wrap(bMsq,0,4).order(ByteOrder.BIG_ENDIAN).getInt();
-        int bUserId = ByteBuffer.wrap(bMsq,4,4).order(ByteOrder.BIG_ENDIAN).getInt();
+        ByteBuffer msqWrapper = ByteBuffer.wrap(bMsq).order(ByteOrder.BIG_ENDIAN);
+
+        int cType = msqWrapper.getInt();
+        int bUserId = msqWrapper.getInt();
         byte[] message = new byte[bMsq.length-8];
-        System.arraycopy(bMsq, 8, message, 0,bMsq.length-8);
+        msqWrapper.get(message);
 
 
         return (new Package(bSrc,bPktId,cType,bUserId, new String(message)));

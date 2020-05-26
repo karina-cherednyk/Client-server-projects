@@ -1,4 +1,4 @@
-import network.BlowfishCipherProcessor;
+import network.PackageProcessor;
 import network.CRC16;
 import network.Package;
 import org.apache.commons.codec.Charsets;
@@ -39,7 +39,7 @@ public class Lab01Test {
                 .putInt(cType).putInt(bUserId).put(message).array();
 
 
-        bMsq = BlowfishCipherProcessor.encryptCipher(bMsq);
+        bMsq = PackageProcessor.processor.encrypt(bMsq);
 
         short crc2 = CRC16.getCrc(bMsq);
 
@@ -63,27 +63,26 @@ public class Lab01Test {
     static  int c;
     @Test
     public void decode1() throws Exception {
-       assertEquals(test1, BlowfishCipherProcessor.decode(test1arr));
+       assertEquals(test1, PackageProcessor.decode(test1arr));
     }
     @Test
     public void decode2() throws Exception {
-        assertEquals(test2, BlowfishCipherProcessor.decode(test2arr));
+        assertEquals(test2, PackageProcessor.decode(test2arr));
     }
     @Test
     public void encode1() throws Exception {
-        assertArrayEquals(BlowfishCipherProcessor.encode(test1), test1arr);
+        assertArrayEquals(PackageProcessor.encode(test1), test1arr);
     }
     @Test
     public void encode2() throws Exception {
-        assertArrayEquals(BlowfishCipherProcessor.encode(test2), test2arr);
+        assertArrayEquals(PackageProcessor.encode(test2), test2arr);
     }
     @Test
     public void counter() throws Exception {
         for(int i=0; i<30; ++i){
-            Package p  = BlowfishCipherProcessor.decode(fillArr((byte)i,i,i,i,"test"));
+            Package p  = PackageProcessor.decode(fillArr((byte)i,i,i,i,"test"));
             System.out.println(p);
-            BlowfishCipherProcessor.encode(p);
-            BlowfishCipherProcessor.getInstance().encrypt(p);
+            PackageProcessor.encode(p);
             System.out.println("success");
         }
     }

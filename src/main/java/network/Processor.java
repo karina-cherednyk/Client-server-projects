@@ -8,41 +8,43 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class Processor implements Runnable{
-    private static AtomicInteger c = new AtomicInteger(0); //counter
     private static ExecutorService threadPool = Executors.newFixedThreadPool(6);
+    private Message message;
+    private static AtomicInteger counter = new AtomicInteger(0);
 
-    private Processor(Package pack) {
-        this.pack = pack;
+    private Processor(Message message) {
+        this.message = message;
     }
 
-    public static void process(Package pack){
-        threadPool.submit( new Processor(pack) );
+    public static void process(Message message){
+        threadPool.submit( new Processor(message) );
     }
 
-    public static void shutDown(){
+    public static  void shutdown(){
         threadPool.shutdown();
         try {
-            if (!threadPool.awaitTermination(60, TimeUnit.SECONDS)) {
-                threadPool.shutdownNow();
-            }
-        } catch (InterruptedException ex) {
+            threadPool.awaitTermination(5, TimeUnit.SECONDS);
+        }catch (InterruptedException e) {
+            e.printStackTrace();
             threadPool.shutdownNow();
-            Thread.currentThread().interrupt();
         }
     }
-    private Package pack;
+    public static void initService(){
+        if(threadPool.isTerminated()) threadPool = Executors.newFixedThreadPool(6);
+    }
+
     @Override
     public void run() {
-        System.out.println("Message has came: "+ pack.getBmsq());
+        System.out.println("Message "+message+" was received");
+        int c = counter.getAndIncrement();
+        Package pack = new Package((byte)c,c,c,c,"OK");
         try {
-            InetAddress addr = InetAddress.getLocalHost();
-            int i = c.getAndIncrement();
-            Package responce = new Package((byte)i,i,i,i, "Sending responce...");
-            byte[] messageToSend = BlowfishCipherProcessor.getInstance().encrypt(responce);
-
-            TCPNetwork.getInstance().sendMessage(messageToSend,addr);
+            byte[] bytePack = PackageProcessor.encode(pack);
+            System.out.println("Sending response "+pack.getBmsq()+" to "+InetAddress.getLocalHost());
+            TCPNetwork.getInstance().sendMessage(bytePack, InetAddress.getLocalHost());
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 }

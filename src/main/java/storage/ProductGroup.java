@@ -2,11 +2,12 @@ package storage;
 
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 public class ProductGroup {
     private final String groupName;
-    private HashMap<String, Product> productList = new HashMap<>();
+    private ConcurrentHashMap<String, Product> productList = new ConcurrentHashMap<>();
 
     public ProductGroup(String groupName) {
         this.groupName = groupName;
