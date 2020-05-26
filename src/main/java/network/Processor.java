@@ -14,14 +14,14 @@ public class Processor {
 
 
     public static void process(Message message) {
-        int c = counter.getAndIncrement();
-        Package pack = new Package((byte) c, c, c, c, "OK");
-        process(pack);
+        threadPool.submit( ()-> {
+            int c = counter.getAndIncrement();
+            Package pack = new Package((byte) c, c, c, c, "OK");
+            process(pack);
+        } );
     }
 
     private static void process(Package pack) {
-        threadPool.submit(() -> {
-
             try {
                 byte[] bytePack = PackageProcessor.encode(pack);
                 System.out.println("Sending response " + pack.getBmsq() + " to " + InetAddress.getLocalHost());
@@ -29,13 +29,15 @@ public class Processor {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        });
+
     }
 
     public static void processFail() {
-        int c = counter.getAndIncrement();
-        Package pack = new Package((byte) c, c, c, c, "FAIL");
-        process(pack);
+        threadPool.submit(() -> {
+            int c = counter.getAndIncrement();
+            Package pack = new Package((byte) c, c, c, c, "FAIL");
+            process(pack);
+        });
     }
 
     public static void shutdown() {

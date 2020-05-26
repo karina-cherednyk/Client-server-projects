@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c0e76950-79ca-411a-af04-c76cb257ab4b" name="Default Changelist" comment="thread safe warehouse classes, network &amp; processor multithreading added, junit tests added">
+    <list default="true" id="c0e76950-79ca-411a-af04-c76cb257ab4b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/network/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/Processor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/TCPNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/TCPNetwork.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -103,7 +102,8 @@
       <workItem from="1590414642078" duration="42000" />
       <workItem from="1590428855230" duration="11595000" />
       <workItem from="1590514124587" duration="8920000" />
-      <workItem from="1590524403571" duration="63000" />
+      <workItem from="1590524403571" duration="197000" />
+      <workItem from="1590524747086" duration="116000" />
     </task>
     <task id="LOCAL-00001" summary="add threads, warehouse class, group class ,product class">
       <created>1590440685227</created>
@@ -119,7 +119,21 @@
       <option name="project" value="LOCAL" />
       <updated>1590522902409</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="added OK, FAIL">
+      <created>1590524568305</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1590524568305</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added OK, FAIL">
+      <created>1590524585216</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1590524585216</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -141,6 +155,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add threads, warehouse class, group class ,product class" />
     <MESSAGE value="thread safe warehouse classes, network &amp; processor multithreading added, junit tests added" />
-    <option name="LAST_COMMIT_MESSAGE" value="thread safe warehouse classes, network &amp; processor multithreading added, junit tests added" />
+    <MESSAGE value="added OK, FAIL" />
+    <option name="LAST_COMMIT_MESSAGE" value="added OK, FAIL" />
   </component>
 </project>
