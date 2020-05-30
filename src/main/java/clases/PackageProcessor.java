@@ -1,5 +1,9 @@
-package network;
+package clases;
 
+import com.google.common.primitives.UnsignedLong;
+import entities.Package;
+import exceptions.MagicByteException;
+import exceptions.WrongCrcException;
 import org.apache.commons.codec.Charsets;
 
 import javax.crypto.NoSuchPaddingException;
@@ -8,15 +12,8 @@ import java.nio.ByteOrder;
 import java.security.NoSuchAlgorithmException;
 
 
-class MagicByteException extends  Exception{
-    public MagicByteException(byte val){super("Magic byte expected got "+val);}
-};
-class WrongCrcException extends  Exception{
-    public WrongCrcException(String s){super(s);}
-};
-
 public class PackageProcessor {
-    public  static  CipherProcessor processor;
+    public  static CipherProcessor processor;
 
     static {
         try {
@@ -30,7 +27,7 @@ public class PackageProcessor {
 
     //lab 01
 
-    public static byte[] encode(byte bSrc, long bPktId, int cType, int bUserId, String message) throws  Exception {
+    public static byte[] encode(byte bSrc, UnsignedLong bPktId, int cType, int bUserId, String message) throws  Exception {
         byte[] bMessage = message.getBytes(Charsets.UTF_8);
         byte[] bMsq = ByteBuffer.allocate(8+bMessage.length)
                 .order(ByteOrder.BIG_ENDIAN)
@@ -44,7 +41,7 @@ public class PackageProcessor {
         byte[] part1 =
                 ByteBuffer.allocate(14)
                         .order(ByteOrder.BIG_ENDIAN)
-                        .put(bMagic).put(bSrc).putLong(bPktId).putInt(bMsq.length).array();
+                        .put(bMagic).put(bSrc).putLong(bPktId.longValue()).putInt(bMsq.length).array();
 
         short wCrc1 = CRC16.getCrc(part1,0,part1.length);
         short wCrc2 = CRC16.getCrc(bMsq,0, bMsq.length);
@@ -69,7 +66,7 @@ public class PackageProcessor {
             throw new MagicByteException(bMagic);
 
         byte bSrc = wrapper.get();
-        long bPktId = wrapper.getLong();
+        UnsignedLong bPktId = UnsignedLong.asUnsigned(wrapper.getLong());
         int wLen = wrapper.getInt();
 
 

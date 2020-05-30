@@ -1,5 +1,10 @@
-package network;
+package clases;
 
+import com.google.common.primitives.UnsignedLong;
+import entities.Package;
+import network.Network;
+
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -13,28 +18,31 @@ public class Processor {
     private static AtomicInteger counter = new AtomicInteger(0);
 
 
-    public static void process(Message message){
-        int c = counter.getAndIncrement();
-        Package pack = new Package((byte)c,c,c,c,"OK");
-        process(pack);
-    }
-    private static void process(Package pack){
-        threadPool.submit(()->{
 
+    public static void process(Network network,Package pack){
+        threadPool.submit(()->{
             try {
+                String message = pack.getMessage();
                 byte[] bytePack = PackageProcessor.encode(pack);
                 System.out.println("Sending response "+pack.getBmsq()+" to "+InetAddress.getLocalHost());
-                TCPNetwork.getInstance().sendMessage(bytePack, InetAddress.getLocalHost());
+                String answerMessage;
+                if (message.equals("time")) {
+                    answerMessage="now()";
+                } else {
+                    answerMessage = "other";
+                }
+                Package answerPackage = new Package((byte) 1, pack.getbPktId(),1,1,answerMessage, pack.getClientInetAddress(),pack.getClientPort());
+
+                network.send(answerPackage);
+            } catch (IOException e) {
+                e.printStackTrace();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } );
     }
-    public static void processFail() {
-        int c = counter.getAndIncrement();
-        Package pack = new Package((byte)c,c,c,c,"FAIL");
-        process(pack);
-    }
+
 
     public static  void shutdown(){
         threadPool.shutdown();

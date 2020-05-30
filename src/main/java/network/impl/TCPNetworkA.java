@@ -1,38 +1,42 @@
-package network;
+package network.impl;
 
+
+import clases.PackageProcessor;
+import entities.Package;
+import exceptions.MagicByteException;
+import exceptions.WrongCrcException;
+import network.Network;
 
 import java.net.InetAddress;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class TCPNetwork implements Network {
-    public class BrokenPackageException extends Exception{
-        BrokenPackageException(String e){super(e);}
-    }
+public class TCPNetworkA  {
+
 
     private static ExecutorService threadPoolSend = Executors.newFixedThreadPool(6);
     private static ExecutorService threadPoolReceive = Executors.newFixedThreadPool(6);
-    private static TCPNetwork instance;
+    private static TCPNetworkA instance;
 
-    public static TCPNetwork getInstance(){
-        if(instance == null) instance = new TCPNetwork();
+    public static TCPNetworkA getInstance(){
+        if(instance == null) instance = new TCPNetworkA();
         return instance;
     }
-    private TCPNetwork(){}
-    @Override
+    private TCPNetworkA(){}
+   // @Override
     public void receiveMessage(byte[] message) throws Exception {
         threadPoolReceive.execute(()-> {
             try {
                 Package pack = PackageProcessor.decode(message);
                 System.out.println("Message "+pack.getBmsq()+" was received");
-                Processor.process(pack.getBmsq());
+                //Processor.process(pack.getBmsq());
             } catch (MagicByteException e) {
                 System.err.println("Package was broken: "+e);
-                Processor.processFail();
+               // Processor.processFail();
             }catch (WrongCrcException w){
                 System.err.println("Package was broken: "+w);
-                Processor.processFail();
+               // Processor.processFail();
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -60,9 +64,14 @@ public class TCPNetwork implements Network {
         if(threadPoolSend.isTerminated()) threadPoolSend = Executors.newFixedThreadPool(6);
         if(threadPoolReceive.isTerminated()) threadPoolReceive = Executors.newFixedThreadPool(6);
     }
-    @Override
+   // @Override
     public void sendMessage(byte[] mess, InetAddress target) throws Exception {
         threadPoolSend.submit( ()-> System.out.println("Message was sent"));
+    }
+
+    //@Override
+    public void send(Package pack) {
+
     }
 
 

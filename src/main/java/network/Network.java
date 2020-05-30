@@ -1,8 +1,18 @@
 package network;
 
-import java.net.InetAddress;
+
+import entities.Package;
+
+import java.io.IOException;
 
 public interface Network {
-    void receiveMessage(byte[] message) throws Exception; //Receiver
-    void sendMessage(byte[] message, InetAddress target) throws Exception; //Sender
+
+    void listen() throws IOException;//Server
+
+    void connect() throws IOException;//client
+
+    Package receive();//Receiver
+    void send(Package pack);//Sender
+
+    void close() throws IOException;//end
 }

@@ -1,6 +1,7 @@
-import network.PackageProcessor;
-import network.CRC16;
-import network.Package;
+import clases.PackageProcessor;
+import clases.CRC16;
+import com.google.common.primitives.UnsignedLong;
+import entities.Package;
 import org.apache.commons.codec.Charsets;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public class Lab01Test {
-    private Package test1 = new Package((byte) 1,2,3,4,"test message");
+    private Package test1 = new Package((byte) 1,UnsignedLong.asUnsigned(2),3,4,"test message");
     private byte[] test1arr;
     private  Package test2;
     private  byte[] test2arr;
@@ -22,18 +23,18 @@ public class Lab01Test {
 
     @Before
     public void init() throws Exception {
-        test1arr = fillArr((byte)1, 2, 3, 4, "test message");
+        test1arr = fillArr((byte)1, UnsignedLong.asUnsigned(2), 3, 4, "test message");
 
         Random r = new Random(System.currentTimeMillis());
         byte a = (byte) r.nextInt(255);
-        long b = r.nextLong();
+        UnsignedLong b = UnsignedLong.asUnsigned(r.nextLong());
         int c = r.nextInt();
         int d = r.nextInt();
         test2 = new Package(a,b,c,d,"rand");
         test2arr = fillArr(a,b,c,d,"rand");
     }
 
-    private byte[] fillArr(byte bSrc, long bPktId, int cType, int bUserId, String msg) throws Exception {
+    private byte[] fillArr(byte bSrc, UnsignedLong bPktId, int cType, int bUserId, String msg) throws Exception {
         byte[] message = msg.getBytes(Charsets.UTF_8);
         byte[] bMsq = ByteBuffer.allocate(message.length+8).order(ByteOrder.BIG_ENDIAN)
                 .putInt(cType).putInt(bUserId).put(message).array();
@@ -44,7 +45,7 @@ public class Lab01Test {
         short crc2 = CRC16.getCrc(bMsq);
 
 
-        byte[] pktIdLong = ByteBuffer.allocate(8).putLong(bPktId).array();
+        byte[] pktIdLong = ByteBuffer.allocate(8).putLong(bPktId.longValue()).array();
         byte[] part1 = {
                 0x13,
                 bSrc,
@@ -80,7 +81,7 @@ public class Lab01Test {
     @Test
     public void counter() throws Exception {
         for(int i=0; i<30; ++i){
-            Package p  = PackageProcessor.decode(fillArr((byte)i,i,i,i,"test"));
+            Package p  = PackageProcessor.decode(fillArr((byte)i,UnsignedLong.asUnsigned(i),i,i,"test"));
             System.out.println(p);
             PackageProcessor.encode(p);
             System.out.println("success");

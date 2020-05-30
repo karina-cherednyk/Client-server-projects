@@ -1,4 +1,4 @@
-package network;
+package clases;
 
 public class CRC16 {
     private static int[] table = {

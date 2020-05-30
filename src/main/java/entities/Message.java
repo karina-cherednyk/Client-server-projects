@@ -1,4 +1,4 @@
-package network;
+package entities;
 
 import java.util.Objects;
 
@@ -6,21 +6,21 @@ public class Message {
     private final int cType, bUserId;
     private final String message;
 
-    Message(int cType, int bUserId, String message) {
+    public Message(int cType, int bUserId, String message) {
         this.cType = cType;
         this.bUserId = bUserId;
         this.message = message;
     }
 
-    int getcType() {
+    public int getcType() {
         return cType;
     }
 
-    int getbUserId() {
+    public int getbUserId() {
         return bUserId;
     }
 
-    String getMessage() {
+    public String getMessage() {
         return message;
     }
 

@@ -1,4 +1,6 @@
-import network.*;
+import clases.PackageGenerator;
+import clases.Processor;
+import network.impl.TCPNetworkA;
 import org.junit.Test;
 
 import java.util.concurrent.ExecutorService;
@@ -12,14 +14,14 @@ public class Lab02Test {
     @Test
     public void withoutExceptions()  {
         try {
-            Processor.initService(); TCPNetwork.initService();
+            Processor.initService(); TCPNetworkA.initService();
             ExecutorService threadPool = Executors.newFixedThreadPool(12);
 
             for (int i = 0; i < 5; ++i) {
                 threadPool.submit(() -> {
                     try {
                         byte[] pack = PackageGenerator.generateCorrectPackage();
-                        TCPNetwork.getInstance().receiveMessage(pack);
+                        TCPNetworkA.getInstance().receiveMessage(pack);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -30,9 +32,9 @@ public class Lab02Test {
             threadPool.shutdown();
             threadPool.awaitTermination(5, TimeUnit.SECONDS);
 
-            TCPNetwork.shutdownReceiver();
+            TCPNetworkA.shutdownReceiver();
             Processor.shutdown();
-            TCPNetwork.shutdownSender();
+            TCPNetworkA.shutdownSender();
 
         }catch (Throwable t){
             fail(t.getMessage());
@@ -41,7 +43,7 @@ public class Lab02Test {
 
     @Test
     public void twoPackagesBroken() throws InterruptedException {
-        Processor.initService(); TCPNetwork.initService();
+        Processor.initService(); TCPNetworkA.initService();
         ExecutorService threadPool = Executors.newFixedThreadPool(2);
 
         for (int i = 0; i < 2; ++i) {
@@ -49,7 +51,7 @@ public class Lab02Test {
             threadPool.submit(() -> {
                 try {
                     byte[] pack = PackageGenerator.generateIncorrectPackage();
-                    TCPNetwork.getInstance().receiveMessage(pack);
+                    TCPNetworkA.getInstance().receiveMessage(pack);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

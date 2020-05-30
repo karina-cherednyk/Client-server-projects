@@ -1,17 +1,28 @@
-package network;
+package entities;
 
+import com.google.common.primitives.UnsignedLong;
+
+import java.net.InetAddress;
 import java.util.Objects;
 
 public final class Package{
     private byte bSrc;
-    private long bPktId;
+    private UnsignedLong bPktId;
     private Message bmsq;
 
+    private InetAddress clientInetAddress;
+    private int clientPort;
 
-    public Package(byte bSrc, long bPktId, int cType, int bUserId, String message) {
+
+    public Package(byte bSrc, UnsignedLong bPktId, int cType, int bUserId, String message) {
         this.bSrc = bSrc;
         this.bPktId = bPktId;
         this.bmsq = new Message(cType,bUserId,message);
+    }
+    public Package(byte bSrc, UnsignedLong bPktId, int cType, int bUserId, String message,  InetAddress clientInetAddress,int clientPort) {
+        this(bSrc,bPktId,cType,bUserId,message);
+        this.clientInetAddress=clientInetAddress;
+        this.clientPort=clientPort;
     }
 
     //unique number of client app
@@ -19,7 +30,7 @@ public final class Package{
         return bSrc;
     }
     //package number
-    public long getbPktId() {
+    public UnsignedLong getbPktId() {
         return bPktId;
     }
     //command code
@@ -39,6 +50,21 @@ public final class Package{
         return bmsq;
     }
 
+    public InetAddress getClientInetAddress() {
+        return clientInetAddress;
+    }
+
+    public int getClientPort() {
+        return clientPort;
+    }
+
+    public void setClientInetAddress(InetAddress clientInetAddress) {
+        this.clientInetAddress = clientInetAddress;
+    }
+
+    public void setClientPort(int clientPort) {
+        this.clientPort = clientPort;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -46,7 +72,7 @@ public final class Package{
         if (o == null || getClass() != o.getClass()) return false;
         Package aPackage = (Package) o;
         return bSrc == aPackage.bSrc &&
-                bPktId == aPackage.bPktId &&
+                bPktId.equals(aPackage.bPktId) &&
                 bmsq.equals(aPackage.bmsq);
     }
 
