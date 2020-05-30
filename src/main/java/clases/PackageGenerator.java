@@ -1,7 +1,5 @@
 package clases;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.google.common.primitives.UnsignedLong;
@@ -14,26 +12,10 @@ public class PackageGenerator {
         int c = counter.getAndIncrement();
         return PackageProcessor.encode(new Package((byte)c, UnsignedLong.valueOf(String.valueOf(c)),c,c,"Package #"+c));
     }
-    public static Package generateCorrect() throws Exception {
+    public static Package generateCorrect()  {
         int c = counter.getAndIncrement();
-        byte [] pack = PackageProcessor.encode(new Package((byte)c, UnsignedLong.valueOf(String.valueOf(c)),c,c,"Package #"+c));
+        return (new Package((byte)c, UnsignedLong.valueOf(String.valueOf(c)),c,c,"Package #"+c));
 
-        byte bSrc = pack[1];
-        UnsignedLong bPktId = UnsignedLong.asUnsigned(ByteBuffer.wrap(pack,2,8 )
-                .order(ByteOrder.BIG_ENDIAN)
-                .getLong());
-        int wLen =  ByteBuffer.wrap(pack,10,4 )
-                .order(ByteOrder.BIG_ENDIAN)
-                .getInt();
-        byte[] bMsq = new byte[wLen];
-        System.arraycopy(pack, 16, bMsq,0,wLen);
-        ByteBuffer msqWrapper = ByteBuffer.wrap(bMsq).order(ByteOrder.BIG_ENDIAN);
-
-        int cType = msqWrapper.getInt();
-        int bUserId = msqWrapper.getInt();
-        byte[] message = new byte[bMsq.length-8];
-        msqWrapper.get(message);
-        return (new Package(bSrc,bPktId,cType,bUserId, new String(message)));
     }
     public static byte[] generateIncorrectPackage() throws Exception {
         int c = 1;

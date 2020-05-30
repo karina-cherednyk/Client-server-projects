@@ -18,7 +18,7 @@ public class Client {
             System.out.println("Client running via " + network + " connection");
 
             network.connect();
-
+//network.send(packet);
             network.send(PackageGenerator.generateCorrect());
             Package answerPacketOne = network.receive();
             if (answerPacketOne.getbPktId().equals(packet.getbPktId()))
