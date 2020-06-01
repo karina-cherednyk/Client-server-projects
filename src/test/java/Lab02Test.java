@@ -1,6 +1,6 @@
 import clases.PackageGenerator;
 import clases.Processor;
-import network.impl.TCPNetworkA;
+import network.impl.TCPNetworkPrev;
 import org.junit.Test;
 
 import java.util.concurrent.ExecutorService;
@@ -14,14 +14,15 @@ public class Lab02Test {
     @Test
     public void withoutExceptions()  {
         try {
-            Processor.initService(); TCPNetworkA.initService();
+            Processor.initService();
+            TCPNetworkPrev.initService();
             ExecutorService threadPool = Executors.newFixedThreadPool(12);
 
             for (int i = 0; i < 5; ++i) {
                 threadPool.submit(() -> {
                     try {
                         byte[] pack = PackageGenerator.generateCorrectPackage();
-                        TCPNetworkA.getInstance().receiveMessage(pack);
+                        TCPNetworkPrev.getInstance().receiveMessage(pack);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -32,9 +33,9 @@ public class Lab02Test {
             threadPool.shutdown();
             threadPool.awaitTermination(5, TimeUnit.SECONDS);
 
-            TCPNetworkA.shutdownReceiver();
+            TCPNetworkPrev.shutdownReceiver();
             Processor.shutdown();
-            TCPNetworkA.shutdownSender();
+            TCPNetworkPrev.shutdownSender();
 
         }catch (Throwable t){
             fail(t.getMessage());
@@ -43,7 +44,7 @@ public class Lab02Test {
 
     @Test
     public void twoPackagesBroken() throws InterruptedException {
-        Processor.initService(); TCPNetworkA.initService();
+        Processor.initService(); TCPNetworkPrev.initService();
         ExecutorService threadPool = Executors.newFixedThreadPool(2);
 
         for (int i = 0; i < 2; ++i) {
@@ -51,7 +52,7 @@ public class Lab02Test {
             threadPool.submit(() -> {
                 try {
                     byte[] pack = PackageGenerator.generateIncorrectPackage();
-                    TCPNetworkA.getInstance().receiveMessage(pack);
+                    TCPNetworkPrev.getInstance().receiveMessage(pack);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -1,37 +1,39 @@
 import clases.PackageGenerator;
-import com.google.common.primitives.UnsignedLong;
 import entities.Package;
+import network.Network;
 import network.impl.TCPNetwork;
 import network.impl.UDPNetwork;
+
+import java.net.SocketTimeoutException;
 
 
 public class Client {
     public static void main(String[] args) {
-        Package packet = new Package((byte) 1, UnsignedLong.ONE, 1,1,"time");
+        Package packet;
+        Package answerPacket;
+        Network network;
 
-        Package secondPacket = new Package((byte) 1, UnsignedLong.ONE, 1, 1, "notTime");
-
+            network = new UDPNetwork();
         try {
-
-            UDPNetwork network = new UDPNetwork();
-            //TCPNetwork network = new TCPNetwork();
+            //network = new TCPNetwork();
             System.out.println("Client running via " + network + " connection");
 
             network.connect();
-//network.send(packet);
-            network.send(PackageGenerator.generateCorrect());
-            Package answerPacketOne = network.receive();
-            if (answerPacketOne.getbPktId().equals(packet.getbPktId()))
-                System.out.println("CORRECT");
-            else
-                System.out.println("WRONG PACKET RESPONSE");
 
-            network.send(secondPacket);
-            Package answerTwo = network.receive();
+            for(int i = 0; i<15; ++i){
 
-            network.close();
+                    packet = PackageGenerator.generateCorrect();
+                    network.send(packet);
+                    answerPacket = network.receive();
+                    if (answerPacket.getbPktId().equals(packet.getbPktId()))
+                        System.out.println("CORRECT");
+                    else
+                        System.out.println("WRONG PACKET RESPONSE");
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-}
+
+
+}}

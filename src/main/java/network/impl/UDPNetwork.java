@@ -12,7 +12,6 @@ import java.net.*;
 import java.util.Arrays;
 
 public class UDPNetwork implements Network {
-
     private DatagramSocket socket;
     private boolean isServer;
 
@@ -56,8 +55,8 @@ public class UDPNetwork implements Network {
 
     @Override
     public void send(Package pack) {
-        try {
 
+        try {
             InetAddress inetAddress = pack.getClientInetAddress() != null ? pack.getClientInetAddress() : InetAddress.getByName(Properties.INET_ADDRESS_NAME);
             int port = pack.getClientPort() != 0 ? pack.getClientPort() : 2305;
 
@@ -67,7 +66,7 @@ public class UDPNetwork implements Network {
             socket.send(datagramPacket);
 
             System.out.println("Send");
-        } catch (UnknownHostException e) {
+        }catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();

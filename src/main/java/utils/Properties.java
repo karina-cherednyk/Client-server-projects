@@ -11,4 +11,5 @@ public class Properties {
     public final static int packetMaxSize = packetPartFirstLengthWithCRC16 + BYTES_MAX_SIZE;
     public final static String INET_ADDRESS_NAME = null;
 
+
 }

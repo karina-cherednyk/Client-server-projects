@@ -1,6 +1,5 @@
 package clases;
 
-import com.google.common.primitives.UnsignedLong;
 import entities.Package;
 import network.Network;
 
@@ -20,7 +19,7 @@ public class Processor {
 
 
     public static void process(Network network,Package pack){
-       // threadPool.submit(()->{
+        threadPool.submit(()->{
             try {
                 String message = pack.getMessage();
                 byte[] bytePack = PackageProcessor.encode(pack);
@@ -40,8 +39,10 @@ public class Processor {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-      //  } );
+        } );
     }
+
+
 
 
     public static  void shutdown(){

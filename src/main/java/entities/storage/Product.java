@@ -1,6 +1,5 @@
-package storage;
+package entities.storage;
 
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Product {
