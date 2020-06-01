@@ -1,7 +1,5 @@
 
 import clases.Processor;
-import network.Network;
-import network.impl.TCPNetwork;
 import network.impl.UDPNetwork;
 
 import java.io.IOException;
@@ -10,33 +8,30 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class Server {
+public class StoreServerUDP {
 
     public static void main(String[] args) {
-
-        //final Network network = new TCPNetwork();
         Processor.initService();
         ExecutorService threadPool = Executors.newFixedThreadPool(12);
         try {
             UDPNetwork network = new UDPNetwork();
-            System.out.println("Server running via " + network + " connection");
-
+            System.out.println("StoreServerUDP running via " + network + " connection");
             network.listen();
-            for (int i = 0; i < 5; ++i) {
+            for(int i = 0; i<12;++i) {
                 threadPool.submit(() -> {
-                    //try {
-                    
-                        network.receive();
-
-
-                    //} /*finally {
-                    //    network.close();
-                    //}
-
+                    try {
+                        while (true){
+                            network.receive();
+                        Thread.sleep(2100);}
+                    } finally {
+                            network.close();
+                    }
 
                 });
             }
         } catch (SocketException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
 

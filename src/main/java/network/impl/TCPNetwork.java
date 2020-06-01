@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Arrays;
 
 public class TCPNetwork implements Network {
@@ -55,7 +56,14 @@ public class TCPNetwork implements Network {
                     return p;
             }
 
-        } catch (IOException e) {
+        }catch (SocketException e){
+            try {
+                close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+        catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();

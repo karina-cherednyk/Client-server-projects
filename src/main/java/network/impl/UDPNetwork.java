@@ -23,6 +23,7 @@ public class UDPNetwork implements Network {
     public void connect() {
         try {
             socket = new DatagramSocket();
+            socket.setSoTimeout(2000);
         } catch (SocketException e) {
             e.printStackTrace();
         }
@@ -44,7 +45,11 @@ public class UDPNetwork implements Network {
             else
                 return p;
 
-        } catch (IOException e) {
+        } catch (SocketTimeoutException e){
+            System.out.println("soket timeout");
+            return null;
+        }
+        catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();

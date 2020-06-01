@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public interface Network {
 
-    void listen() throws IOException;//Server
+    void listen() throws IOException;//StoreServerUDP
 
     void connect() throws IOException;//client
 
