@@ -3,23 +3,23 @@ package clases;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.google.common.primitives.UnsignedLong;
-import entities.Package;
+import entities.Packet;
 
-public class PackageGenerator {
+public class PacketGenerator {
     static  AtomicInteger counter = new AtomicInteger(1);
 
     public static byte[] generateCorrectPackage() throws Exception {
         int c = counter.getAndIncrement();
-        return PackageProcessor.encode(new Package((byte)c, UnsignedLong.valueOf(String.valueOf(c)),c,c,"Package #"+c));
+        return PacketProcessor.encode(new Packet((byte)c, UnsignedLong.valueOf(String.valueOf(c)),c,c,"Packet #"+c));
     }
-    public static Package generateCorrect()  {
+    public static Packet generateCorrect()  {
         int c = counter.getAndIncrement();
-        return (new Package((byte)c, UnsignedLong.valueOf(String.valueOf(c)),c,c,"Package #"+c));
+        return (new Packet((byte)c, UnsignedLong.valueOf(String.valueOf(c)),c,c,"Packet #"+c));
 
     }
     public static byte[] generateIncorrectPackage() throws Exception {
         int c = 1;
-        byte[] failPack =  PackageProcessor.encode(new Package((byte)c,UnsignedLong.valueOf(String.valueOf(c)),c,c,"Package #"+c));
+        byte[] failPack =  PacketProcessor.encode(new Packet((byte)c,UnsignedLong.valueOf(String.valueOf(c)),c,c,"Packet #"+c));
         int exceptionChoice = (int) (10*Math.random() ) %3;
         if(exceptionChoice== 0)failPack[0] = 0; //wrong magic byte
         else if(exceptionChoice == 1) ++failPack[14]; //wrong wCrc1

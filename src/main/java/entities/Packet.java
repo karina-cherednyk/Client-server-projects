@@ -5,7 +5,7 @@ import com.google.common.primitives.UnsignedLong;
 import java.net.InetAddress;
 import java.util.Objects;
 
-public final class Package{
+public final class Packet {
     private byte bSrc;
     private UnsignedLong bPktId;
     private Message bmsq;
@@ -14,12 +14,12 @@ public final class Package{
     private int clientPort;
 
 
-    public Package(byte bSrc, UnsignedLong bPktId, int cType, int bUserId, String message) {
+    public Packet(byte bSrc, UnsignedLong bPktId, int cType, int bUserId, String message) {
         this.bSrc = bSrc;
         this.bPktId = bPktId;
         this.bmsq = new Message(cType,bUserId,message);
     }
-    public Package(byte bSrc, UnsignedLong bPktId, int cType, int bUserId, String message,  InetAddress clientInetAddress,int clientPort) {
+    public Packet(byte bSrc, UnsignedLong bPktId, int cType, int bUserId, String message, InetAddress clientInetAddress, int clientPort) {
         this(bSrc,bPktId,cType,bUserId,message);
         this.clientInetAddress=clientInetAddress;
         this.clientPort=clientPort;
@@ -70,10 +70,10 @@ public final class Package{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Package aPackage = (Package) o;
-        return bSrc == aPackage.bSrc &&
-                bPktId.equals(aPackage.bPktId) &&
-                bmsq.equals(aPackage.bmsq);
+        Packet aPacket = (Packet) o;
+        return bSrc == aPacket.bSrc &&
+                bPktId.equals(aPacket.bPktId) &&
+                bmsq.equals(aPacket.bmsq);
     }
 
     @Override
@@ -83,7 +83,7 @@ public final class Package{
 
     @Override
     public String toString() {
-        return "Package{" +
+        return "Packet{" +
                 "bSrc=" + bSrc +
                 ", bPktId=" + bPktId +
                 ", bmsq=" + bmsq +

@@ -1,8 +1,8 @@
 package network.impl;
 
 
-import clases.PackageProcessor;
-import entities.Package;
+import clases.PacketProcessor;
+import entities.Packet;
 import exceptions.MagicByteException;
 import exceptions.WrongCrcException;
 
@@ -27,7 +27,7 @@ public class TCPNetworkPrev {
     public void receiveMessage(byte[] message) throws Exception {
         threadPoolReceive.execute(()-> {
             try {
-                Package pack = PackageProcessor.decode(message);
+                Packet pack = PacketProcessor.decode(message);
                 System.out.println("Message "+pack.getBmsq()+" was received");
                 //Processor.process(pack.getBmsq());
             } catch (MagicByteException e) {

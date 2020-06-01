@@ -1,7 +1,7 @@
 package clases;
 
 import com.google.common.primitives.UnsignedLong;
-import entities.Package;
+import entities.Packet;
 import exceptions.MagicByteException;
 import exceptions.WrongCrcException;
 import org.apache.commons.codec.Charsets;
@@ -12,7 +12,7 @@ import java.nio.ByteOrder;
 import java.security.NoSuchAlgorithmException;
 
 
-public class PackageProcessor {
+public class PacketProcessor {
     public  static CipherProcessor processor;
 
     static {
@@ -52,13 +52,13 @@ public class PackageProcessor {
 
     }
 
-    public static byte[] encode(Package p) throws Exception {
+    public static byte[] encode(Packet p) throws Exception {
         return encode(p.getbSrc(),p.getbPktId(),p.getcType(),p.getbUserId(),p.getMessage());
     }
 
 
     //if package is incorrect throw IllegalArgumentException
-    public static Package decode(byte[] input) throws Exception {
+    public static Packet decode(byte[] input) throws Exception {
 
         ByteBuffer wrapper = ByteBuffer.wrap(input).order(ByteOrder.BIG_ENDIAN);
         byte bMagic = wrapper.get();
@@ -103,6 +103,6 @@ public class PackageProcessor {
         msqWrapper.get(message);
 
 
-        return (new Package(bSrc,bPktId,cType,bUserId, new String(message)));
+        return (new Packet(bSrc,bPktId,cType,bUserId, new String(message)));
     }
 }

@@ -1,8 +1,8 @@
 package network.impl;
 
-import clases.PackageProcessor;
+import clases.PacketProcessor;
 import clases.Processor;
-import entities.Package;
+import entities.Packet;
 import network.Network;
 import utils.Properties;
 
@@ -22,13 +22,13 @@ public class UDPNetwork implements Network {
 
     public void connect() {
         try {
-            socket = new DatagramSocket();
+            socket = new DatagramSocket(0);
             socket.setSoTimeout(2000);
         } catch (SocketException e) {
             e.printStackTrace();
         }
     }
-    public Package receive()  {
+    public Packet receive()  {
         try {
             byte [] packageBufer = new byte [Properties.packetMaxSize];
             DatagramPacket packet = new DatagramPacket(packageBufer,packageBufer.length);
@@ -36,7 +36,7 @@ public class UDPNetwork implements Network {
             socket.receive(packet);
 
             byte[] fullPacket = Arrays.copyOfRange(packageBufer,0,packet.getLength());
-            Package p = PackageProcessor.decode(fullPacket);
+            Packet p = PacketProcessor.decode(fullPacket);
             p.setClientInetAddress(packet.getAddress());
             p.setClientPort(packet.getPort());
 
@@ -59,13 +59,13 @@ public class UDPNetwork implements Network {
 
 
     @Override
-    public void send(Package pack) {
+    public void send(Packet pack) {
 
         try {
             InetAddress inetAddress = pack.getClientInetAddress() != null ? pack.getClientInetAddress() : InetAddress.getByName(Properties.INET_ADDRESS_NAME);
             int port = pack.getClientPort() != 0 ? pack.getClientPort() : 2305;
 
-            byte[] packetBytes = PackageProcessor.encode(pack);
+            byte[] packetBytes = PacketProcessor.encode(pack);
 
             DatagramPacket datagramPacket = new DatagramPacket(packetBytes, packetBytes.length, inetAddress, port);
             socket.send(datagramPacket);

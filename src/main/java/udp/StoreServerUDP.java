@@ -1,3 +1,4 @@
+package udp;
 
 import clases.Processor;
 import network.impl.UDPNetwork;
@@ -11,23 +12,20 @@ import java.util.concurrent.TimeUnit;
 public class StoreServerUDP {
 
     public static void main(String[] args) {
+        UDPNetwork network = new UDPNetwork();
         Processor.initService();
         ExecutorService threadPool = Executors.newFixedThreadPool(12);
         try {
-            UDPNetwork network = new UDPNetwork();
-            System.out.println("StoreServerUDP running via " + network + " connection");
+            System.out.println("udp.StoreServerUDP running via " + network + " connection");
             network.listen();
-            for(int i = 0; i<12;++i) {
+            for (int i = 0; i < 12; ++i) {
                 threadPool.submit(() -> {
-                    try {
                         while (true){
                             network.receive();
-                        Thread.sleep(2100);}
-                    } finally {
-                            network.close();
+                            //simulation of delaying and losing packets
+                           // Thread.sleep(2100);
                     }
-
-                });
+                   });
             }
         } catch (SocketException e) {
             e.printStackTrace();
@@ -39,6 +37,7 @@ public class StoreServerUDP {
                 threadPool.shutdown();
                 while (!threadPool.isTerminated())
                     threadPool.awaitTermination(5, TimeUnit.SECONDS);
+                network.close();
 
                 Processor.shutdown();
             } catch (InterruptedException e) {

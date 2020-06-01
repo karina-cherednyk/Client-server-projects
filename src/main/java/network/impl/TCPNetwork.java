@@ -1,95 +1,154 @@
 package network.impl;
 
-import clases.PackageProcessor;
+import clases.PacketProcessor;
 import clases.Processor;
-import entities.Package;
+import entities.Packet;
 import network.Network;
 import utils.Properties;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketException;
+import java.net.*;
 import java.util.Arrays;
 
 public class TCPNetwork implements Network {
 
     ServerSocket serverSocket;
-    private static ThreadLocal<Socket> threadLocal;
+    ThreadLocal<Socket> localSoket;
 
-
-    Socket socket;
     @Override
-    public synchronized void listen() throws IOException {
-        if(serverSocket==null)
+    public void listen() throws IOException {
+        if (serverSocket == null)
             serverSocket = new ServerSocket(Properties.SERVER_PORT);
-        socket=serverSocket.accept();
-        threadLocal=ThreadLocal.withInitial(()->socket);
+        getClient();
+
+    }
+    public void getClient(){
+        localSoket = ThreadLocal.withInitial(() -> {
+            try {
+                return serverSocket.accept();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
     }
 
     @Override
-    public void connect() throws IOException {
-        socket = new Socket(InetAddress.getByName(Properties.INET_ADDRESS_NAME),Properties.SERVER_PORT);
-        threadLocal=ThreadLocal.withInitial(()->socket);
+    public void connect() {
+        localSoket = ThreadLocal.withInitial(() -> {
+            try {
+                return new Socket(InetAddress.getByName(Properties.INET_ADDRESS_NAME), Properties.SERVER_PORT);
+            }catch (ConnectException e){
+                return doReconnect();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+
     }
-    @Override
-    public Package receive(){
 
-        try {
-            InputStream inputStream = threadLocal.get().getInputStream();
-            byte [] packageBufer = new byte [Properties.packetMaxSize];
-            int length = inputStream.read(packageBufer);
-            if(length>0){
-                byte[] fullPacket = Arrays.copyOfRange(packageBufer,0,length);
-
-                System.out.println("Received");
-                System.out.println(Arrays.toString(fullPacket) + "\n");
-
-                Package p = PackageProcessor.decode(fullPacket);
-
-                if (serverSocket != null)
-                    Processor.process(this, p);
-                else
-                    return p;
+    private Socket doReconnect() {
+        boolean isConnected = false;
+        Socket s = null;
+        while (!isConnected){
+            try {
+                s = new Socket(InetAddress.getByName(Properties.INET_ADDRESS_NAME), Properties.SERVER_PORT);
+                isConnected=true;
+            }catch (ConnectException e){
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+                System.out.println("reconnect");
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
-        }catch (SocketException e){
+        }
+        return  s;
+    }
+
+    @Override
+    public Packet receive() {
+
+        try {
+            while (true) {
+                InputStream inputStream = localSoket.get().getInputStream();
+                byte[] packageBufer = new byte[Properties.packetMaxSize];
+                int length = inputStream.read(packageBufer);
+                if (length > 0) {
+                    byte[] fullPacket = Arrays.copyOfRange(packageBufer, 0, length);
+
+                    System.out.println("Received");
+                    System.out.println(Arrays.toString(fullPacket) + "\n");
+
+                    Packet p = PacketProcessor.decode(fullPacket);
+
+                    if (serverSocket != null)
+                        Processor.process(this, p, localSoket.get());
+                    else
+                        return p;
+                } else {
+                    break;
+                }
+            }
+
+        } catch (SocketException e) {
             try {
                 close();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return  null;
+        return null;
     }
-    public boolean getStatus(){
 
-        return socket.isConnected();
-    }
 
     @Override
-    public void send(Package pack) {
+    public void send(Packet pack) {
         try {
-            OutputStream socketOutputStream = socket.getOutputStream();
-
-            byte[] packetBytes = PackageProcessor.encode(pack);
+            OutputStream socketOutputStream = localSoket.get().getOutputStream();
+            byte[] packetBytes = PacketProcessor.encode(pack);
 
             socketOutputStream.write(packetBytes);
             socketOutputStream.flush();
 
             System.out.println("Send");
             System.out.println(Arrays.toString(packetBytes) + "\n");
-        }catch (IOException e){
+        }catch (SocketException e) {
+            doReconnect();
+        }catch (IOException e) {
             e.printStackTrace();
-        }catch (Exception e){
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void send(Packet pack, Socket socket) {
+        try {
+            OutputStream socketOutputStream = socket.getOutputStream();
+            byte[] packetBytes = PacketProcessor.encode(pack);
+
+            socketOutputStream.write(packetBytes);
+            socketOutputStream.flush();
+
+            System.out.println("Send");
+            System.out.println(Arrays.toString(packetBytes) + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -97,10 +156,10 @@ public class TCPNetwork implements Network {
 
     @Override
     public void close() throws IOException {
-        if(serverSocket!=null)
+        if (serverSocket != null)
             serverSocket.close();
         else
-            socket.close();
+            localSoket.get().close();
 
     }
 }

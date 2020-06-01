@@ -1,4 +1,4 @@
-import clases.PackageGenerator;
+import clases.PacketGenerator;
 import clases.Processor;
 import network.impl.TCPNetworkPrev;
 import org.junit.Test;
@@ -21,7 +21,7 @@ public class Lab02Test {
             for (int i = 0; i < 5; ++i) {
                 threadPool.submit(() -> {
                     try {
-                        byte[] pack = PackageGenerator.generateCorrectPackage();
+                        byte[] pack = PacketGenerator.generateCorrectPackage();
                         TCPNetworkPrev.getInstance().receiveMessage(pack);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -51,7 +51,7 @@ public class Lab02Test {
             int finalI = i;
             threadPool.submit(() -> {
                 try {
-                    byte[] pack = PackageGenerator.generateIncorrectPackage();
+                    byte[] pack = PacketGenerator.generateIncorrectPackage();
                     TCPNetworkPrev.getInstance().receiveMessage(pack);
                 } catch (Exception e) {
                     e.printStackTrace();
