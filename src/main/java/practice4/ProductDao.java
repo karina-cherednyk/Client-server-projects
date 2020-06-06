@@ -143,8 +143,8 @@ public class ProductDao {
             products.add(new Product(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getDouble("price"), resultSet.getInt("quantity")));
         return products;
     }
-    public void truncate() {
-        String sqlQuery = "DELETE FROM " + TABLE_NAME;
+    public void dropTable() {
+        String sqlQuery = "DROP TABLE " + TABLE_NAME;
 
         try {
             Statement statement = connection.createStatement();

@@ -1,6 +1,7 @@
 package storage;
 
-import java.util.HashMap;
+import storage.Product;
+
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 

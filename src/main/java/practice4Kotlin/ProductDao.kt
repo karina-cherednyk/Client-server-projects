@@ -1,8 +1,5 @@
 package practice4Kotlin
-
-import practice4.Criteria
-import practice4.DB
-import storage.Product
+import java.io.File
 import java.lang.Exception
 import java.lang.RuntimeException
 import java.sql.Connection
@@ -14,34 +11,47 @@ import java.util.*
 class InsertException(message:String?): Exception(message)
 class UpdateException(message:String?): Exception(message)
 class DeleteException(message:String?): Exception(message)
+class SelectException(message: String?): Exception(message)
 
 object ProductDao{
-    val connection = DB.connect();
+    val connection: Connection = DB.connection;
     const val tableName = "product"
+
+    private fun ResultSet.toProduct(): Product = Product(getInt("id"), getString("name"), getDouble("price"), getInt("quantity"))
+
+
+    fun populateDB() {
+        val names = File("names.txt").useLines { it.toList() }
+        names.forEach{
+            insert(it, Math.random()*200)
+        }
+
+    }
+
 
     fun createTable(){
         try{
             val statement = connection.createStatement()
-            val s = "create table if not exists $tableName ('id' INTEGER PRIMARY KEY AUTOINCREMENT, 'name' TEXT unique , 'price' DECIMAL(10,3))"
+            val s = "create table if not exists '$tableName' ('id' INTEGER PRIMARY KEY AUTOINCREMENT, 'name' TEXT unique , 'price' DECIMAL(10,3), 'quantity' NUMBER) "
             statement.execute(s)
+            println("Table $tableName created")
+            println()
         }catch (e: SQLException) {
             throw RuntimeException("Cant create table", e)
         }
     }
 
-    fun insert(name: String, price: Double): Product{
+    fun insert(name: String, price: Double): Product {
         try {
             connection.prepareStatement(
-                    "insert intta$tableName ('name', 'price') values (?,?)", Statement.RETURN_GENERATED_KEYS).use { insert ->
+                    "insert into $tableName ('name', 'price', 'quantity') values (?,?,0)", Statement.RETURN_GENERATED_KEYS).use { insert ->
 
                 insert.setString(1, name)
                 insert.setDouble(2, price)
                 insert.execute()
 
                 val resultSet = insert.generatedKeys
-                val id = resultSet.getInt("id")
-                println("Inserted $id $name")
-
+                val id = resultSet.getInt(1)
                 return Product(id, name, price)
             }
         } catch (e: SQLException) {
@@ -65,13 +75,17 @@ object ProductDao{
     fun delete(p: Product) {
         val deleteStatement = "delete from $tableName where id = ?"
         try {
-            connection.prepareStatement(deleteStatement).use { statement -> statement.setInt(1, p.id) }
+            connection.prepareStatement(deleteStatement).use { statement ->
+                statement.setInt(1, p.id)
+                statement.executeUpdate()
+            }
+
         } catch (e: SQLException) {
             throw DeleteException(e.message)
         }
     }
 
-    private fun ResultSet.toProduct():Product = Product(getInt("id"), getString("name"), getDouble("price"), getInt("quantity"))
+    
 
     fun selectOneByName(name: String): Product? {
         val sqlQuery = "SELECT * FROM $tableName WHERE name = ?"
@@ -82,11 +96,11 @@ object ProductDao{
                 return if (resultSet.next()) resultSet.toProduct() else null
             }
         } catch (sqlException: SQLException) {
-            throw RuntimeException("Unable to select", sqlException )
+            throw SelectException(sqlException.message )
         }
     }
 
-    fun select(limit: Int, offset: Int): List<Product>? {
+    fun select(limit: Int, offset: Int): List<Product> {
         val sqlQuery = "SELECT * FROM $tableName LIMIT ?, ?"
 
         try {
@@ -98,12 +112,12 @@ object ProductDao{
                 return fromResultSet(resultSet)
             }
         } catch (sqlException: SQLException) {
-            throw RuntimeException("Unable to select", sqlException )
+            throw SelectException(sqlException.message )
         }
 
     }
-    fun selectAll(): List<Product>? {
-        val sqlQuery = "SELECT * FROta$tableName"
+    fun selectAll(): List<Product> {
+        val sqlQuery = "SELECT * FROM $tableName"
 
         try {
             val statement = connection.createStatement()
@@ -111,12 +125,12 @@ object ProductDao{
             val resultSet = statement.executeQuery(sqlQuery)
             return fromResultSet(resultSet)
         } catch (sqlException: SQLException) {
-            throw RuntimeException("Unable to select", sqlException )
+            throw SelectException(sqlException.message )
         }
     }
 
-    fun select(criteria: Criteria): List<Product>? {
-        val sqlQuery = "SELECT * FROM " + tableName + criteria.filterQuery
+    fun select(criteria: Criteria): List<Product> {
+        val sqlQuery = "SELECT * FROM " + tableName + criteria.filter()
 
         try {
                 connection.createStatement().use { statement ->
@@ -124,7 +138,7 @@ object ProductDao{
                 return fromResultSet(resultSet)
                   }
         } catch (sqlException: SQLException) {
-            throw RuntimeException("Unable to select", sqlException )
+            throw SelectException(sqlException.message )
         }
 
     }
@@ -137,7 +151,7 @@ object ProductDao{
     }
 
     fun truncate() {
-        val sqlQuery = "DELETE FROM $tableName"
+        val sqlQuery = "DROP TABLE $tableName"
         try {
             connection.createStatement().use { statement ->
             statement.execute(sqlQuery)
