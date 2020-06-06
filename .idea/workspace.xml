@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c0e76950-79ca-411a-af04-c76cb257ab4b" name="Default Changelist" comment="">
+    <list default="true" id="c0e76950-79ca-411a-af04-c76cb257ab4b" name="Default Changelist" comment="practice 4, w/o tests">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_annotations_13_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_1_3_72.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_common_1_3_72.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_jdk7_1_3_72.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_jdk8_1_3_72.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_test_1_3_72.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_test_common_1_3_72.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_xerial_sqlite_jdbc_3_31_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/practice4/Criteria.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/practice4/DB.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/practice4/ProductDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/practice4Kotlin/Criteria.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/practice4Kotlin/ProductDao.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/AtomicDouble.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/Processor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project01.iml" beforeDir="false" afterPath="$PROJECT_DIR$/project01.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/storage/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/storage/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/network/Processor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/network/Processor.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,10 +33,16 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1c3NAtWM5Wa4pf7t80DEOnlKKa5" />
@@ -28,6 +51,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="TODO_SCOPE" value="All Places" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -40,6 +64,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -103,7 +128,11 @@
       <workItem from="1590428855230" duration="11595000" />
       <workItem from="1590514124587" duration="8920000" />
       <workItem from="1590524403571" duration="197000" />
-      <workItem from="1590524747086" duration="116000" />
+      <workItem from="1590524747086" duration="782000" />
+      <workItem from="1591271793084" duration="153000" />
+      <workItem from="1591398671815" duration="671000" />
+      <workItem from="1591399366608" duration="1653000" />
+      <workItem from="1591401050776" duration="9220000" />
     </task>
     <task id="LOCAL-00001" summary="add threads, warehouse class, group class ,product class">
       <created>1590440685227</created>
@@ -133,7 +162,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590524585216</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added OK, FAIL">
+      <created>1590524893533</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1590524893533</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,6 +192,7 @@
     <MESSAGE value="add threads, warehouse class, group class ,product class" />
     <MESSAGE value="thread safe warehouse classes, network &amp; processor multithreading added, junit tests added" />
     <MESSAGE value="added OK, FAIL" />
-    <option name="LAST_COMMIT_MESSAGE" value="added OK, FAIL" />
+    <MESSAGE value="practice 4, w/o tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="practice 4, w/o tests" />
   </component>
 </project>
