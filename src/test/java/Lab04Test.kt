@@ -1,10 +1,7 @@
 
 import org.junit.Assert.assertEquals
 import org.junit.jupiter.api.*
-import practice4Kotlin.Criteria
-import practice4Kotlin.DB
-import practice4Kotlin.InsertException
-import practice4Kotlin.ProductDao
+import practice4Kotlin.*
 import java.io.File
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
@@ -96,11 +93,19 @@ class Lab04Test {
         ProductDao.update(p)
         assertEquals(ProductDao.selectOneByName("apple")!!.price, 5.0, 0.01)
     }
+    @org.junit.Test(expected = UpdateException::class)
+    fun nothingToUpdate(){
+        ProductDao.update(Product(1, "test", 12.3))
+    }
     @Test
     fun testDelete(){
         val p = ProductDao.insert("apple",5.0)
         assertEquals(ProductDao.selectAll().size, 1)
         ProductDao.delete(p)
         assertTrue(ProductDao.selectAll().isEmpty())
+    }
+    @org.junit.Test(expected = DeleteException::class)
+    fun nothingToDelete(){
+        ProductDao.delete(Product(1, "test", 12.3))
     }
 }
