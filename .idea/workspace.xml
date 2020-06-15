@@ -2,8 +2,69 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c0e76950-79ca-411a-af04-c76cb257ab4b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_9_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_9_10.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_9_10_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_kotlin_2_9_8.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_api_0_11_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_impl_0_11_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_jackson_0_11_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/products.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/users.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/handlers/abstractions.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/handlers/product_handlers.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/handlers/user_handlers.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/http_server/server.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/JWTS.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_test_1_3_72.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_test_common_1_3_72.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_xerial_sqlite_jdbc_3_31_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Lab04Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Lab04Test.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project01.iml" beforeDir="false" afterPath="$PROJECT_DIR$/project01.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/PackageGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/data_storage/ProductsDAO.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/CRC16.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/CipherProcessor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/Message.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/Network.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/Package.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/PackageProcessor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/Processor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/TCPNetwork.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/practice4/Criteria.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/practice4/DB.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/practice4/ProductDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/practice4Kotlin/Criteria.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/practice4Kotlin/DB.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/practice4Kotlin/Product.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/practice4Kotlin/ProductDao.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/storage/Product.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/storage/ProductGroup.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/storage/Warehouse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/AtomicDouble.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Lab01Test.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Lab02Test.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Lab04Test.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/project01.kotlin_module" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/project01.kotlin_module" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PackageGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/network/CRC16.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/network/CipherProcessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/network/MagicByteException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/network/Message.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/network/Network.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/network/Package.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/network/PackageProcessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/network/Processor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/network/TCPNetwork$BrokenPackageException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/network/TCPNetwork.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/network/WrongCrcException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/storage/Product.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/storage/ProductGroup.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/storage/Warehouse$Command.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/storage/Warehouse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/Lab01Test.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/Lab02Test.class" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,6 +77,7 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="Kotlin Class" />
         <option value="Kotlin File" />
       </list>
     </option>
@@ -23,7 +85,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="db_practice" />
+        <entry key="$PROJECT_DIR$" value="db_practice_kotlin" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -54,6 +116,8 @@
       <recent name="data_storage" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Asus\MVNProjects\project01\src\main\java\http_handlers" />
+      <recent name="C:\Users\Asus\MVNProjects\project01\src\main\java\server_side" />
       <recent name="C:\Users\Asus\MVNProjects\project01\src\main\java\practice4Kotlin" />
     </key>
   </component>
@@ -69,25 +133,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.Lab04Test">
-    <configuration name="Lab01Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="project01" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="Lab01Test" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Lab02Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="project01" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="Lab02Test" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Kotlin.http_server.ServerKt">
     <configuration name="Lab04Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project01" />
       <option name="PACKAGE_NAME" value="" />
@@ -97,27 +143,53 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="data_storage.ProductsDAOKt" type="JetRunConfigurationType" factoryName="Kotlin" temporary="true" nameIsGenerated="true">
+    <configuration name="dao.CategoryDAOKt" type="JetRunConfigurationType" factoryName="Kotlin" temporary="true" nameIsGenerated="true">
       <module name="project01" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" value="data_storage.ProductsDAOKt" />
+      <option name="MAIN_CLASS_NAME" value="dao.CategoryDAOKt" />
       <option name="WORKING_DIRECTORY" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="data_storage.TestclassKt" type="JetRunConfigurationType" factoryName="Kotlin" temporary="true" nameIsGenerated="true">
+    <configuration name="http_server.ServerKt" type="JetRunConfigurationType" factoryName="Kotlin" temporary="true" nameIsGenerated="true">
       <module name="project01" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" value="data_storage.TestclassKt" />
+      <option name="MAIN_CLASS_NAME" value="http_server.ServerKt" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="server_side.ServerKt" type="JetRunConfigurationType" factoryName="Kotlin" temporary="true" nameIsGenerated="true">
+      <module name="project01" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" value="server_side.ServerKt" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="utils.JWTServiceKt" type="JetRunConfigurationType" factoryName="Kotlin" temporary="true" nameIsGenerated="true">
+      <module name="project01" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" value="utils.JWTServiceKt" />
       <option name="WORKING_DIRECTORY" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -125,11 +197,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin.http_server.ServerKt" />
+        <item itemvalue="Kotlin.utils.JWTServiceKt" />
+        <item itemvalue="Kotlin.server_side.ServerKt" />
+        <item itemvalue="Kotlin.dao.CategoryDAOKt" />
         <item itemvalue="JUnit.Lab04Test" />
-        <item itemvalue="Kotlin.data_storage.ProductsDAOKt" />
-        <item itemvalue="Kotlin.data_storage.TestclassKt" />
-        <item itemvalue="JUnit.Lab02Test" />
-        <item itemvalue="JUnit.Lab01Test" />
       </list>
     </recent_temporary>
   </component>
@@ -155,7 +227,10 @@
       <workItem from="1591399366608" duration="1653000" />
       <workItem from="1591401050776" duration="9220000" />
       <workItem from="1591451423176" duration="18360000" />
-      <workItem from="1591625876766" duration="210000" />
+      <workItem from="1591625876766" duration="294000" />
+      <workItem from="1592145059060" duration="12876000" />
+      <workItem from="1592166759546" duration="18559000" />
+      <workItem from="1592228663580" duration="23404000" />
     </task>
     <task id="LOCAL-00001" summary="add threads, warehouse class, group class ,product class">
       <created>1590440685227</created>
@@ -199,7 +274,14 @@
       <option name="project" value="LOCAL" />
       <updated>1591472248439</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="add update/delete exception test">
+      <created>1591626107322</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1591626107322</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -224,6 +306,24 @@
     <MESSAGE value="added OK, FAIL" />
     <MESSAGE value="practice 4, w/o tests" />
     <MESSAGE value="rewrite practice4 package in kotlin, add test 4" />
-    <option name="LAST_COMMIT_MESSAGE" value="rewrite practice4 package in kotlin, add test 4" />
+    <MESSAGE value="add update/delete exception test" />
+    <option name="LAST_COMMIT_MESSAGE" value="add update/delete exception test" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-field">
+          <url>file://$PROJECT_DIR$/src/main/java/http_handlers/user_handlers.kt</url>
+          <line>11</line>
+          <properties myFieldName="token" myClassName="http_handlers.LoginResponse" />
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/java/http_handlers/product_handlers.kt</url>
+          <line>24</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
