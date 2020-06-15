@@ -16,8 +16,10 @@ import java.net.InetSocketAddress
 
 object Server {
     const val AUTHORIZATION_HEADER = "authorization_token"
+    const val  PORT = 8080
+    const val BACKLOG = 0
     val anonymous = HttpPrincipal("anonymous","anonymous")
-    private val publicBinders = listOf(
+    private val publicBinders = listOf<UriBinder>(
             UriBinder(Method.GET, "/api/good/show/\\d+", GetProductHandler)
     )
     private val anonBinders = listOf(
@@ -66,12 +68,10 @@ object Server {
 
     var server: HttpServer
     init {
-        Database.connect("jdbc:h2:./store.db", driver = "org.h2.Driver")
-        transaction {  SchemaUtils.create(UserTable, ProductTable, CategoryTable) }
 
-        server = HttpServer.create(InetSocketAddress(8080), 0)
+        server = HttpServer.create(InetSocketAddress(PORT), BACKLOG)
         createContext("/", anonBinders, AnonymousPageException::class.simpleName!!, anonymousAuthenticator)
-        createContext("/api/good", adminBinders, AdminPageException::class.simpleName!!, adminAuthenticator)
+        createContext("/api/", adminBinders, AdminPageException::class.simpleName!!, adminAuthenticator)
         createContext("/api/good/show", publicBinders, PublicPageException::class.simpleName!!, publicAuthenticator)
 
     }
@@ -89,9 +89,5 @@ object Server {
 
 fun main(){
     Runtime.getRuntime().addShutdownHook(object : Thread() {    override fun run()  = Server.stop()     })
-
-//    val admin = User( login="admin", password = DigestUtils.md5Hex("admin"), role = Role.Admin)
     Server.start()
-//    UserTable.insert(admin)
-
 }

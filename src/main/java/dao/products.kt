@@ -1,5 +1,6 @@
 package dao
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.dao.IntIdTable
 import org.jetbrains.exposed.sql.*
@@ -47,6 +48,7 @@ object ProductTable: IntIdTable(){
     fun delete(id: Int) = transaction { deleteWhere { ProductTable.id eq id } }
 }
 data class Category(val id:Int?=null, val name:String, val description:String?=null,  val products: List<Product>?=null)
-data class Product(val id:Int?=null, val name:String, val description:String?=null, val amount:Int, val price:Double, val category:Int){
-    fun isValid() = amount>0 && price>0
+data class Product(var id:Int?=null, val name:String, val description:String?=null, val amount:Int=0, val price:Double, val category:Int){
+    @JsonIgnore
+    fun isValid() = amount>=0 && price>=0
 }

@@ -25,7 +25,7 @@ object PostProductHandler: UriHandler() {
         val product = mapper.readValue(exchange.requestBody, Product::class.java)
         if(!product.isValid())                          throw ProductException("Invalid product", 409)
         if(product.id == null)                          throw ProductException("Product id not found", 409)
-        if(!ProductTable.hasId(product.id))             throw ProductException("Product not found", 404)
+        if(!ProductTable.hasId(product.id!!))             throw ProductException("Product not found", 404)
         ProductTable.update(product)
         writeResponse(exchange,200, product)
     }
