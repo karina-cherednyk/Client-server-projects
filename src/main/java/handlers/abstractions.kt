@@ -12,7 +12,7 @@ class UriBinder(val method: Method, pattern: String, val handler: UriHandler) {
     fun handle(exchange: HttpExchange) = handler.handle(exchange)
 }
 
-class ErrorResponse(val messageClass: String, val message: String, val role: String? = null)
+class ErrorResponse(val errorClass: String, val message: String, val role: String? = null)
 open class ServerException(message: String, val code: Int): Exception(message)
 class PublicPageException(message: String, code: Int = 404): ServerException(message,code)
 class AnonymousPageException(message: String, code: Int = 404): ServerException(message,code)
@@ -23,14 +23,19 @@ abstract class UriHandler: HttpHandler {
     companion object {
         val mapper = jacksonObjectMapper()
 
-        fun writeResponse(exchange: HttpExchange, statusCode: Int, response: Any) {
+        fun writeResponse(exchange: HttpExchange, statusCode: Int, response: Any?=null) {
             try {
+                if( response == null){
+                    exchange.sendResponseHeaders(statusCode,-1)
+                    exchange.close()
+                    return
+                }
                 val bytes = mapper.writeValueAsBytes(response)
                 exchange.responseHeaders.add("Content-Type", "application/json")
                 exchange.sendResponseHeaders(statusCode, bytes.size.toLong())
                 exchange.responseBody.write(bytes)
                 exchange.close()
-            }catch (e : Exception){ println(e.message)  }
+            }catch (e : Exception){ println(e.message)}
         }
     }
 

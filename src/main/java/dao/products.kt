@@ -47,8 +47,8 @@ object ProductTable: IntIdTable(){
 
     fun delete(id: Int) = transaction { deleteWhere { ProductTable.id eq id } }
 }
-data class Category(val id:Int?=null, val name:String, val description:String?=null,  val products: List<Product>?=null)
-data class Product(var id:Int?=null, val name:String, val description:String?=null, val amount:Int=0, val price:Double, val category:Int){
+data class Category(var id:Int?=null, var name:String, var description:String?=null,  var products: List<Product>?=null)
+data class Product(var id:Int?=null, var name:String, var description:String?=null, var amount:Int=0, var price:Double, var category:Int){
     @JsonIgnore
     fun isValid() = amount>=0 && price>=0
 }

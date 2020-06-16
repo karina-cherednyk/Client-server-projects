@@ -25,9 +25,13 @@ object PostProductHandler: UriHandler() {
         val product = mapper.readValue(exchange.requestBody, Product::class.java)
         if(!product.isValid())                          throw ProductException("Invalid product", 409)
         if(product.id == null)                          throw ProductException("Product id not found", 409)
-        if(!ProductTable.hasId(product.id!!))             throw ProductException("Product not found", 404)
+        if(!ProductTable.hasId(product.id!!))           throw ProductException("Product not found", 404)
+
+        val productWithSuchName = ProductTable.byName(product.name)
+        if(productWithSuchName!=null && productWithSuchName.id != product.id)
+                                                        throw ProductException("Product with name ${product.name} already exists", 409)
         ProductTable.update(product)
-        writeResponse(exchange,200, product)
+        writeResponse(exchange,204)
     }
 }
 
@@ -46,7 +50,7 @@ object DeleteProductHandler: UriHandler(){
         val id = uri.substring(uri.lastIndexOf('/')+1).toInt()
         if(!ProductTable.hasId(id))                     throw ProductException("Product not found", 404)
         ProductTable.delete(id)
-        writeResponse(exchange,204, id)
+        writeResponse(exchange,204)
     }
 }
 
