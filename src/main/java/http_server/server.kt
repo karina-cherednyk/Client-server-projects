@@ -33,7 +33,7 @@ object Server {
     private val anonBinders = listOf(
             UriBinder(Method.PUT, "/login", LoginHandler),
             UriBinder(Method.PUT, "/signup", SignUpHandler),
-            UriBinder(Method.OPTIONS, "/", OptionsHandler)
+            UriBinder(Method.OPTIONS, "/.*", OptionsHandler)
     )
     private val adminBinders = listOf(
             UriBinder(Method.PUT, "/api/good", PutProductHandler),
@@ -42,7 +42,7 @@ object Server {
             UriBinder(Method.PUT, "/api/category", PutCategoryHandler),
             UriBinder(Method.POST, "/api/category", PostCategoryHandler),
             UriBinder(Method.DELETE, "/api/category/\\d+", DeleteCategoryHandler),
-            UriBinder(Method.OPTIONS, "/", OptionsHandler)
+            UriBinder(Method.OPTIONS, "/.*", OptionsHandler)
 
     )
 
