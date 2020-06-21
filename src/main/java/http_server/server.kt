@@ -104,16 +104,17 @@ object Server {
         transaction { SchemaUtils.create(UserTable, CategoryTable, ProductTable) }
         UserTable.insert(User( login="admin", password = DigestUtils.md5Hex("admin"), role = Role.Admin))
 
-        val fn =  Paths.get("").toFile()
-        var c:Int = 0
+
+
+        val producers = File("randomData/Producers.txt").readLines()
+        val ps = producers.size
         val r = Random()
-        fn.absoluteFile.walk().maxDepth(1).forEach {
+        Paths.get("randomData").toFile().absoluteFile.walk().maxDepth(1).forEach {
             val fileName = it.name
-            if(it.isFile && fileName.endsWith(".txt")){
-                CategoryTable.insert(Category(name=fileName.removeSuffix(".txt")))
-                ++c
+            if(it.isFile && fileName.endsWith(".txt") && it.name != "Producers.txt"){
+                val c = CategoryTable.insert(Category(name=fileName.removeSuffix(".txt")))
                 it.readLines().forEach{
-                    ProductTable.insert(Product(name=it, category = c, price = r.nextDouble() * 100, amount = r.nextInt(1000) ))
+                    ProductTable.insert(Product(name=it, category = c, price = r.nextDouble() * 100, amount = r.nextInt(1000), producer = producers[r.nextInt(ps)] ))
                 }
 
             }

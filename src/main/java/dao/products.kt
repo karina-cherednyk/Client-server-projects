@@ -45,9 +45,10 @@ object ProductTable: IntIdTable(){
     val amount = integer("amount").clientDefault { 0 }
     val price = double("price")
     val category = reference("category", CategoryTable.id)
+    val producer = text("producer")
 
 
-    private fun ResultRow.mapProduct() = Product(this[id].value, this[name], this[description], this[amount], this[price], this[category].value)
+    private fun ResultRow.mapProduct() = Product(this[id].value, this[name], this[description], this[amount], this[price], this[category].value, this[producer])
     fun byCategory(id: Int) = transaction { select{ category eq id} }.map { it.mapProduct() }
     fun byName(name: String) = transaction { select{ ProductTable.name eq name}.singleOrNull() ?.mapProduct() }
     fun hasName(name: String) = transaction { !select{ ProductTable.name eq name}.empty()}
@@ -57,12 +58,14 @@ object ProductTable: IntIdTable(){
 
     fun insert(product: Product) =
             transaction{
-                insertAndGetId { it[name] = product.name; it[description] = product.description; it[amount] = product.amount; it[price]  = product.price; it[category] = EntityID(product.category, CategoryTable)}.value
+                insertAndGetId {
+                    it[name] = product.name; it[description] = product.description; it[amount] = product.amount; it[price]  = product.price; it[category] = EntityID(product.category, CategoryTable); it[producer] = product.producer
+                }.value
             }
 
     fun update(product: Product) =
             transaction {
-                update({id eq product.id}) { it[name] = product.name; it[description] = product.description; it[amount] = product.amount; it[price]  = product.price}
+                update({id eq product.id}) { it[name] = product.name; it[description] = product.description; it[amount] = product.amount; it[price]  = product.price; it[producer] = product.producer}
             }
 
     fun delete(id: Int) = transaction { deleteWhere { ProductTable.id eq id } }
@@ -79,7 +82,7 @@ object ProductTable: IntIdTable(){
     }
 }
 data class Category(var id:Int?=null, var name:String, var description:String?=null,  var products: List<Product>?=null, var  totalCost:Double? = null)
-data class Product(var id:Int?=null, var name:String, var description:String?=null, var amount:Int=0, var price:Double, var category:Int, var categoryName:String? = null){
+data class Product(var id:Int?=null, var name:String, var description:String?=null, var amount:Int=0, var price:Double, var category:Int, var producer: String, var categoryName:String? = null){
     @JsonIgnore
     fun isValid() = amount>=0 && price>=0
 }

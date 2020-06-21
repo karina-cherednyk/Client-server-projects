@@ -94,7 +94,7 @@ class Practice5Test {
         val token = logInAndGetToken(admin).token
         val cId = given().header(Server.AUTHORIZATION_HEADER,token).body(c).put("/api/category").body.asString().toInt()
 
-        val p = Product(name="aa", description = "bb", category = cId, price = 12.0)
+        val p = Product(name="aa", description = "bb", category = cId, price = 12.0, producer = "sdfsdf")
 
         val pId = given().header(Server.AUTHORIZATION_HEADER,token).body(p).put("/api/good").body.asString().toInt()
         p.id = pId
@@ -109,7 +109,7 @@ class Practice5Test {
     fun putProductToUnknownCategory(){
         UserTable.insert(adminHex)
         val token = logInAndGetToken(admin).token
-        val invalidProduct = Product(name="a",price = 1.0,category = 1)
+        val invalidProduct = Product(name="a",price = 1.0,category = 1, producer = "sdfsdf")
         given().header(Server.AUTHORIZATION_HEADER, token).body(invalidProduct).then().body("errorClass", `is`(CategoryException::class.simpleName)).statusCode(404)
     }
     @Test
@@ -120,7 +120,7 @@ class Practice5Test {
         val token = logInAndGetToken(admin).token
         val cId = given().header(Server.AUTHORIZATION_HEADER,token).body(c).put("/api/category").body.asString().toInt()
 
-        val invalidProduct = Product(name="a",price = -19.0, category = cId)
+        val invalidProduct = Product(name="a",price = -19.0, category = cId, producer = "sdfsdf")
         given().header(Server.AUTHORIZATION_HEADER, token).body(invalidProduct).then()
                 .body("errorClass", `is`(ProductException::class.simpleName))
                 .body("message", `is`("Invalid product"))
@@ -138,7 +138,7 @@ class Practice5Test {
         val cId = given().header(Server.AUTHORIZATION_HEADER,token).body(c).put("/api/category").body.asString().toInt()
 
         //create product
-        val p = Product(name="aa", description = "bb", category = cId, price = 12.0)
+        val p = Product(name="aa", description = "bb", category = cId, price = 12.0, producer = "sdfsdf")
         p.id  = given().header(Server.AUTHORIZATION_HEADER,token).body(p).put("/api/good").body.asString().toInt()
 
         //delete product
@@ -168,7 +168,7 @@ class Practice5Test {
         val cId = given().header(Server.AUTHORIZATION_HEADER,token).body(c).put("/api/category").body.asString().toInt()
 
         //create product
-        val p = Product(name="aa", description = "bb", category = cId, price = 12.0)
+        val p = Product(name="aa", description = "bb", category = cId, price = 12.0, producer = "sdfsdf")
         p.id  = given().header(Server.AUTHORIZATION_HEADER,token).body(p).put("/api/good").body.asString().toInt()
 
         //post
