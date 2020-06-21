@@ -32,8 +32,8 @@ object CategoryTable: IntIdTable(){
         ProductTable.deleteCategory(id)
         transaction { deleteWhere { CategoryTable.id eq id } }
     }
-    fun getAll() = transaction { selectAll().orderBy(name to SortOrder.ASC).map { it.mapCategoryPartly() } }
-
+    fun getAll() = transaction { selectAll().orderBy(name to SortOrder.ASC).map { it.mapCategoryPartly() }}
+    fun nameById(id: Int) = transaction { select { CategoryTable.id eq id }.singleOrNull()?.get(name) }
     fun update(category: Category) =
             transaction {   update({id eq category.id}) { it[name] = category.name; it[description] = category.description; }    }
 }
@@ -49,7 +49,12 @@ object ProductTable: IntIdTable(){
 
 
     private fun ResultRow.mapProduct() = Product(this[id].value, this[name], this[description], this[amount], this[price], this[category].value, this[producer])
-    fun byCategory(id: Int) = transaction { select{ category eq id} }.map { it.mapProduct() }
+    fun byCategory(id: Int): List<Product> {
+        val name = CategoryTable.nameById(id)?: return emptyList<Product>()
+        val products = transaction { select{ category eq id} }.map { it.mapProduct() }
+        products.forEach { it.categoryName = name }
+        return products
+    }
     fun byName(name: String) = transaction { select{ ProductTable.name eq name}.singleOrNull() ?.mapProduct() }
     fun hasName(name: String) = transaction { !select{ ProductTable.name eq name}.empty()}
     fun byId(id: Int) = transaction { select{ ProductTable.id eq id}.singleOrNull()?.mapProduct() }
@@ -74,8 +79,9 @@ object ProductTable: IntIdTable(){
     fun getAll(): List<Product> {
             val products = transaction {  selectAll().orderBy(name to SortOrder.ASC).map { it.mapProduct() } }
             val map = mutableMapOf<Int, String>()
-            products.forEach { it.categoryName = map.getOrElse(it.category){
-                map[it.category] = CategoryTable.byId(it.category)!!.name
+            products.forEach {
+                it.categoryName = map.getOrElse(it.category){
+                map[it.category] = CategoryTable.nameById(it.category)!!
                 return@getOrElse map[it.category]!!
             } }
         return products

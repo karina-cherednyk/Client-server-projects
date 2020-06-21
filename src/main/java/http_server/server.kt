@@ -50,7 +50,8 @@ object Server {
         override fun authenticate(exchange: HttpExchange?): Result {
             exchange!!
             return try {
-                val token = exchange.requestHeaders.getFirst(AUTHORIZATION_HEADER) ?: throw Exception("Permission denied")
+               // val token = exchange.requestHeaders.getFirst(AUTHORIZATION_HEADER) ?: throw Exception("Permission denied")
+                val token = exchange.requestHeaders.getFirst(AUTHORIZATION_HEADER) ?: return Success(anonymous)
                 val claims = JWTS.decodeJwt(token)!!
                 if(JWTS.isExpired(claims)) throw Exception("Token is expired")
                 Success(HttpPrincipal(JWTS.login(claims), JWTS.role(claims)))
