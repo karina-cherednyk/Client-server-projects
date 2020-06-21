@@ -14,6 +14,7 @@ import utils.JWTS
 import java.io.File
 import java.lang.Exception
 import java.net.InetSocketAddress
+import java.net.URI
 import java.nio.file.Paths
 import java.util.*
 
@@ -23,14 +24,16 @@ object Server {
     const val  PORT = 8080
     const val BACKLOG = 0
     val anonymous = HttpPrincipal("anonymous","anonymous")
-    private val publicBinders = listOf<UriBinder>(
+    private val publicBinders = listOf(
             UriBinder(Method.GET, "/api/show/good/\\d+", GetProductHandler),
-            UriBinder(Method.GET, "/api/show", GetAllCategories),
+            UriBinder(Method.GET, "/api/show/categories", GetAllCategories),
+            UriBinder(Method.GET, "/api/show/goods", GetAllProducts),
             UriBinder(Method.GET, "/api/show/category/\\d+", GetCategoryHandler)
     )
     private val anonBinders = listOf(
             UriBinder(Method.PUT, "/login", LoginHandler),
-            UriBinder(Method.PUT, "/signup", SignUpHandler)
+            UriBinder(Method.PUT, "/signup", SignUpHandler),
+            UriBinder(Method.OPTIONS, "/", OptionsHandler)
     )
     private val adminBinders = listOf(
             UriBinder(Method.PUT, "/api/good", PutProductHandler),
@@ -38,7 +41,9 @@ object Server {
             UriBinder(Method.DELETE, "/api/good/\\d+", DeleteProductHandler),
             UriBinder(Method.PUT, "/api/category", PutCategoryHandler),
             UriBinder(Method.POST, "/api/category", PostCategoryHandler),
-            UriBinder(Method.DELETE, "/api/category/\\d+", DeleteCategoryHandler)
+            UriBinder(Method.DELETE, "/api/category/\\d+", DeleteCategoryHandler),
+            UriBinder(Method.OPTIONS, "/", OptionsHandler)
+
     )
 
     private val publicAuthenticator = object:Authenticator(){

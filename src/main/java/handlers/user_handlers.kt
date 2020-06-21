@@ -34,3 +34,11 @@ object SignUpHandler: UriHandler(){
     }
 
 }
+object OptionsHandler: UriHandler(){
+    override fun handleOrThrow(exchange: HttpExchange) {
+        exchange.responseHeaders.add("Access-Control-Allow-Origin", "*")
+        exchange.sendResponseHeaders(200, -1)
+        exchange.close()
+    }
+
+}

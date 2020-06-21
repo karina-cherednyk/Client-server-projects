@@ -96,3 +96,8 @@ object GetAllCategories: UriHandler(){
         writeResponse(exchange,200, CategoryTable.getAll())
     }
 }
+object GetAllProducts: UriHandler(){
+    override fun handleOrThrow(exchange: HttpExchange) {
+        writeResponse(exchange,200, ProductTable.getAll())
+    }
+}

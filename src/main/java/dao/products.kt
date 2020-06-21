@@ -32,7 +32,7 @@ object CategoryTable: IntIdTable(){
         ProductTable.deleteCategory(id)
         transaction { deleteWhere { CategoryTable.id eq id } }
     }
-    fun getAll() = transaction { selectAll().map { it.mapCategoryPartly() } }
+    fun getAll() = transaction { selectAll().orderBy(name to SortOrder.ASC).map { it.mapCategoryPartly() } }
 
     fun update(category: Category) =
             transaction {   update({id eq category.id}) { it[name] = category.name; it[description] = category.description; }    }
@@ -53,7 +53,7 @@ object ProductTable: IntIdTable(){
     fun hasName(name: String) = transaction { !select{ ProductTable.name eq name}.empty()}
     fun byId(id: Int) = transaction { select{ ProductTable.id eq id}.singleOrNull()?.mapProduct() }
     fun hasId(id: Int) = transaction { !select{ ProductTable.id eq id}.empty() }
-    fun select(offset:Int, limit:Int) = transaction { selectAll().limit(limit, offset = offset).map { it.mapProduct() } }
+    fun getAll(offset:Int, limit:Int) = transaction { selectAll().orderBy(name to SortOrder.ASC).limit(limit, offset = offset).map { it.mapProduct() } }
 
     fun insert(product: Product) =
             transaction{
@@ -67,9 +67,19 @@ object ProductTable: IntIdTable(){
 
     fun delete(id: Int) = transaction { deleteWhere { ProductTable.id eq id } }
     fun deleteCategory(id: Int) = transaction { deleteWhere { ProductTable.category eq id } }
+
+    fun getAll(): List<Product> {
+            val products = transaction {  selectAll().orderBy(name to SortOrder.ASC).map { it.mapProduct() } }
+            val map = mutableMapOf<Int, String>()
+            products.forEach { it.categoryName = map.getOrElse(it.category){
+                map[it.category] = CategoryTable.byId(it.category)!!.name
+                return@getOrElse map[it.category]!!
+            } }
+        return products
+    }
 }
 data class Category(var id:Int?=null, var name:String, var description:String?=null,  var products: List<Product>?=null, var  totalCost:Double? = null)
-data class Product(var id:Int?=null, var name:String, var description:String?=null, var amount:Int=0, var price:Double, var category:Int){
+data class Product(var id:Int?=null, var name:String, var description:String?=null, var amount:Int=0, var price:Double, var category:Int, var categoryName:String? = null){
     @JsonIgnore
     fun isValid() = amount>=0 && price>=0
 }

@@ -5,7 +5,7 @@ import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpHandler
 import kotlin.Exception
 
-enum class Method { GET , POST, PUT, DELETE }
+enum class Method { GET , POST, PUT, DELETE, OPTIONS }
 class UriBinder(val method: Method, pattern: String, val handler: UriHandler) {
     val regex = pattern.toRegex()
     fun matches(exchange: HttpExchange) = exchange.requestMethod == method.name && exchange.requestURI.toString().matches(regex)
