@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c0e76950-79ca-411a-af04-c76cb257ab4b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/products.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/products.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/abstractions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/abstractions.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/product_handlers.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/product_handlers.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/user_handlers.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/user_handlers.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/http_server/server.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/http_server/server.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store.db.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/store.db.mv.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/Practice5Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/Practice5Test.class" afterDir="false" />
-    </list>
+    <list default="true" id="c0e76950-79ca-411a-af04-c76cb257ab4b" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,7 +170,7 @@
       <workItem from="1592323867278" duration="2802000" />
       <workItem from="1592510082989" duration="305000" />
       <workItem from="1592767806010" duration="5814000" />
-      <workItem from="1592776998817" duration="1930000" />
+      <workItem from="1592776998817" duration="2132000" />
     </task>
     <task id="LOCAL-00001" summary="add threads, warehouse class, group class ,product class">
       <created>1590440685227</created>
@@ -251,7 +242,21 @@
       <option name="project" value="LOCAL" />
       <updated>1592772880556</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="options">
+      <created>1592778944225</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1592778944226</updated>
+    </task>
+    <task id="LOCAL-00012" summary="options regex fixed">
+      <created>1592779090252</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1592779090252</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -280,7 +285,9 @@
     <MESSAGE value="htpp server main functionality provided" />
     <MESSAGE value="add tests" />
     <MESSAGE value="add category queries" />
-    <option name="LAST_COMMIT_MESSAGE" value="add category queries" />
+    <MESSAGE value="options" />
+    <MESSAGE value="options regex fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="options regex fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
