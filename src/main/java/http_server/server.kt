@@ -9,9 +9,13 @@ import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpPrincipal
 import dao.*
 import handlers.*
+import org.apache.commons.codec.digest.DigestUtils
 import utils.JWTS
+import java.io.File
 import java.lang.Exception
 import java.net.InetSocketAddress
+import java.nio.file.Paths
+import java.util.*
 
 
 object Server {
@@ -20,7 +24,9 @@ object Server {
     const val BACKLOG = 0
     val anonymous = HttpPrincipal("anonymous","anonymous")
     private val publicBinders = listOf<UriBinder>(
-            UriBinder(Method.GET, "/api/good/show/\\d+", GetProductHandler)
+            UriBinder(Method.GET, "/api/show/good/\\d+", GetProductHandler),
+            UriBinder(Method.GET, "/api/show", GetAllCategories),
+            UriBinder(Method.GET, "/api/show/category/\\d+", GetCategoryHandler)
     )
     private val anonBinders = listOf(
             UriBinder(Method.PUT, "/login", LoginHandler),
@@ -30,7 +36,9 @@ object Server {
             UriBinder(Method.PUT, "/api/good", PutProductHandler),
             UriBinder(Method.POST, "/api/good", PostProductHandler),
             UriBinder(Method.DELETE, "/api/good/\\d+", DeleteProductHandler),
-            UriBinder(Method.PUT, "/api/category", PutCategoryHandler)
+            UriBinder(Method.PUT, "/api/category", PutCategoryHandler),
+            UriBinder(Method.POST, "/api/category", PostCategoryHandler),
+            UriBinder(Method.DELETE, "/api/category/\\d+", DeleteCategoryHandler)
     )
 
     private val publicAuthenticator = object:Authenticator(){
@@ -68,11 +76,11 @@ object Server {
 
     var server: HttpServer
     init {
-
+        startDB()
         server = HttpServer.create(InetSocketAddress(PORT), BACKLOG)
         createContext("/", anonBinders, AnonymousPageException::class.simpleName!!, anonymousAuthenticator)
         createContext("/api/", adminBinders, AdminPageException::class.simpleName!!, adminAuthenticator)
-        createContext("/api/good/show", publicBinders, PublicPageException::class.simpleName!!, publicAuthenticator)
+        createContext("/api/show", publicBinders, PublicPageException::class.simpleName!!, publicAuthenticator)
 
     }
     fun start() { server.start() ; println("Server started")}
@@ -83,6 +91,27 @@ object Server {
             binders.find { binder -> binder.matches(it) }?.apply { handle(it); return@createContext }
             UriHandler.writeResponse(it, 404, ErrorResponse(className, "page not found", it.principal.realm))
         }.authenticator = authenticator
+    }
+    private fun startDB(){
+        Database.connect("jdbc:h2:./store.db", driver = "org.h2.Driver")
+        transaction {  SchemaUtils.drop(UserTable, CategoryTable, ProductTable) } //remove
+        transaction { SchemaUtils.create(UserTable, CategoryTable, ProductTable) }
+        UserTable.insert(User( login="admin", password = DigestUtils.md5Hex("admin"), role = Role.Admin))
+
+        val fn =  Paths.get("").toFile()
+        var c:Int = 0
+        val r = Random()
+        fn.absoluteFile.walk().maxDepth(1).forEach {
+            val fileName = it.name
+            if(it.isFile && fileName.endsWith(".txt")){
+                CategoryTable.insert(Category(name=fileName.removeSuffix(".txt")))
+                ++c
+                it.readLines().forEach{
+                    ProductTable.insert(Product(name=it, category = c, price = r.nextDouble() * 100, amount = r.nextInt(1000) ))
+                }
+
+            }
+        }
     }
 }
 

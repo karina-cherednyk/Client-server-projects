@@ -19,7 +19,14 @@ object PutProductHandler: UriHandler() {
         writeResponse(exchange,200, id )
     }
 }
-
+object PutCategoryHandler: UriHandler() {
+    override fun handleOrThrow(exchange: HttpExchange) {
+        val category = mapper.readValue(exchange.requestBody, Category::class.java)
+        if(CategoryTable.hasName(category.name))        throw CategoryException("Category with name ${category.name} already exists", 409)
+        val id = CategoryTable.insert(category)
+        writeResponse(exchange,200, id)
+    }
+}
 object PostProductHandler: UriHandler() {
     override fun handleOrThrow(exchange: HttpExchange) {
         val product = mapper.readValue(exchange.requestBody, Product::class.java)
@@ -35,12 +42,17 @@ object PostProductHandler: UriHandler() {
     }
 }
 
-object PutCategoryHandler: UriHandler() {
+object PostCategoryHandler: UriHandler() {
     override fun handleOrThrow(exchange: HttpExchange) {
         val category = mapper.readValue(exchange.requestBody, Category::class.java)
-        if(CategoryTable.hasName(category.name))        throw CategoryException("category with name ${category.name} already exists", 409)
-        val id = CategoryTable.insert(category)
-        writeResponse(exchange,200, id)
+        if(category.id == null)                          throw CategoryException("Category id not found", 409)
+        if(!CategoryTable.hasId(category.id!!))          throw CategoryException("Category not found", 404)
+
+        val categoryWithSuchName = CategoryTable.byName(category.name)
+        if(categoryWithSuchName!=null && categoryWithSuchName.id != category.id)
+            throw CategoryException("Category with name ${category.name} already exists", 409)
+        CategoryTable.update(category)
+        writeResponse(exchange,204)
     }
 }
 
@@ -53,12 +65,34 @@ object DeleteProductHandler: UriHandler(){
         writeResponse(exchange,204)
     }
 }
+object DeleteCategoryHandler: UriHandler(){
+    override fun handleOrThrow(exchange: HttpExchange) {
+        val uri = exchange.requestURI.toString()
+        val id = uri.substring(uri.lastIndexOf('/')+1).toInt()
+        if(!CategoryTable.hasId(id))                     throw CategoryException("Category not found", 404)
+        CategoryTable.delete(id)
+        writeResponse(exchange,204)
+    }
+}
 
 object GetProductHandler: UriHandler() {
     override fun handleOrThrow(exchange: HttpExchange) {
         val uri = exchange.requestURI.toString()
         val id = uri.substring(uri.lastIndexOf('/')+1).toInt()
-        val product = ProductTable.byId(id)?:           throw ProductException("product with id $id not found", 404)
+        val product = ProductTable.byId(id)?:           throw ProductException("Product with id $id not found", 404)
         writeResponse(exchange,200, product)
+    }
+}
+object GetCategoryHandler: UriHandler() {
+    override fun handleOrThrow(exchange: HttpExchange) {
+        val uri = exchange.requestURI.toString()
+        val id = uri.substring(uri.lastIndexOf('/')+1).toInt()
+        val product = CategoryTable.byId(id)?:           throw CategoryException("Category with id $id not found", 404)
+        writeResponse(exchange,200, product)
+    }
+}
+object GetAllCategories: UriHandler(){
+    override fun handleOrThrow(exchange: HttpExchange) {
+        writeResponse(exchange,200, CategoryTable.getAll())
     }
 }

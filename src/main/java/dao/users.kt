@@ -12,11 +12,11 @@ object UserTable: IntIdTable(){
     var password = varchar("password", 250)
     var role = enumeration("role", Role::class)
 
-    fun byId(id: Int) = transaction{ select { UserTable.id eq id }.singleOrNull()}?.mapUser()
-    fun byLogin(login: String) = transaction{ select { UserTable.login eq login }.singleOrNull()}?.mapUser()
+    fun byId(id: Int) = transaction{ select { UserTable.id eq id }.singleOrNull()?.mapUser()}
+    fun byLogin(login: String) = transaction{ select { UserTable.login eq login }.singleOrNull()?.mapUser()}
 
     fun insert(user: User) =
-            transaction{ insertAndGetId { it[login] = user.login; it[password] = user.password; it[role] = user.role }}.value
+            transaction{ insertAndGetId { it[login] = user.login; it[password] = user.password; it[role] = user.role }.value}
 
     private fun ResultRow.mapUser() = User(this[id].value, this[login], this[password], this[role])
 }
