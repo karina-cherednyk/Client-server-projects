@@ -37,6 +37,8 @@ object SignUpHandler: UriHandler(){
 object OptionsHandler: UriHandler(){
     override fun handleOrThrow(exchange: HttpExchange) {
         exchange.responseHeaders.add("Access-Control-Allow-Origin", "*")
+        exchange.responseHeaders.add( "Access-Control-Allow-Methods","POST, GET, OPTIONS, DELETE, PUT")
+        exchange.responseHeaders.add( "Access-Control-Allow-Headers","X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding, X-Auth-Token, content-type")
         exchange.sendResponseHeaders(200, -1)
         exchange.close()
     }

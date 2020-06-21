@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c0e76950-79ca-411a-af04-c76cb257ab4b" name="Default Changelist" comment="" />
+    <list default="true" id="c0e76950-79ca-411a-af04-c76cb257ab4b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/abstractions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/abstractions.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/user_handlers.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/user_handlers.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/http_server/server.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/http_server/server.kt" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,6 +175,7 @@
       <workItem from="1592510082989" duration="305000" />
       <workItem from="1592767806010" duration="5814000" />
       <workItem from="1592776998817" duration="2132000" />
+      <workItem from="1592779450935" duration="236000" />
     </task>
     <task id="LOCAL-00001" summary="add threads, warehouse class, group class ,product class">
       <created>1590440685227</created>
@@ -256,7 +261,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592779090252</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="public w/o token not pass">
+      <created>1592779516171</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1592779516171</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -287,7 +299,8 @@
     <MESSAGE value="add category queries" />
     <MESSAGE value="options" />
     <MESSAGE value="options regex fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="options regex fixed" />
+    <MESSAGE value="public w/o token not pass" />
+    <option name="LAST_COMMIT_MESSAGE" value="public w/o token not pass" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -25,6 +25,7 @@ abstract class UriHandler: HttpHandler {
 
         fun writeResponse(exchange: HttpExchange, statusCode: Int, response: Any?=null) {
             try {
+                exchange.responseHeaders.add("Access-Control-Allow-Origin", "*")
                 if( response == null){
                     exchange.sendResponseHeaders(statusCode,-1)
                     exchange.close()
