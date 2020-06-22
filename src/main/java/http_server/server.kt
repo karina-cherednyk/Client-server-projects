@@ -28,8 +28,8 @@ object Server {
             UriBinder(Method.GET, "/api/show/good/\\d+", GetProductHandler),
             UriBinder(Method.GET, "/api/show/categories", GetAllCategories),
             UriBinder(Method.GET, "/api/show/goods", GetAllProducts),
-            UriBinder(Method.GET, "/api/show/category/\\d+", GetCategoryHandler)
-
+            UriBinder(Method.GET, "/api/show/category/\\d+", GetCategoryHandler),
+            UriBinder(Method.OPTIONS, "/.*", OptionsHandler)
     )
     private val anonBinders = listOf(
             UriBinder(Method.PUT, "/login", LoginHandler),
@@ -42,13 +42,14 @@ object Server {
             UriBinder(Method.DELETE, "/api/good/\\d+", DeleteProductHandler),
             UriBinder(Method.PUT, "/api/category", PutCategoryHandler),
             UriBinder(Method.POST, "/api/category", PostCategoryHandler),
-            UriBinder(Method.DELETE, "/api/category/\\d+", DeleteCategoryHandler)
+            UriBinder(Method.DELETE, "/api/category/\\d+", DeleteCategoryHandler),
+            UriBinder(Method.OPTIONS, "/.*", OptionsHandler)
 
     )
 
     private val publicAuthenticator = object:Authenticator(){
         override fun authenticate(exchange: HttpExchange?): Result {
-            exchange!!
+            if(exchange!!.requestMethod == Method.OPTIONS.name) return Success(anonymous)
             return try {
                 val token = exchange.requestHeaders.getFirst(AUTHORIZATION_HEADER) ?: throw Exception("Permission denied")
                // val token = exchange.requestHeaders.getFirst(AUTHORIZATION_HEADER) ?: return Success(anonymous)
@@ -68,6 +69,7 @@ object Server {
     }
     private val adminAuthenticator = object: Authenticator(){
         override fun authenticate(exchange: HttpExchange?): Result {
+            if(exchange!!.requestMethod == Method.OPTIONS.name) return Success(anonymous)
             return try {
                 val token = exchange!!.requestHeaders.getFirst(AUTHORIZATION_HEADER)
                 val claims = JWTS.decodeJwt(token)!!

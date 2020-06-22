@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c0e76950-79ca-411a-af04-c76cb257ab4b" name="Default Changelist" comment="">
+    <list default="true" id="c0e76950-79ca-411a-af04-c76cb257ab4b" name="Default Changelist" comment="фтщтньщгы Щ">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/http_server/server.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/http_server/server.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/JWTS.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/JWTS.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store.db.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/store.db.mv.db" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -178,7 +180,8 @@
       <workItem from="1592779450935" duration="333000" />
       <workItem from="1592780724639" duration="1846000" />
       <workItem from="1592857295239" duration="727000" />
-      <workItem from="1592864621463" duration="61000" />
+      <workItem from="1592864621463" duration="334000" />
+      <workItem from="1592865139437" duration="1585000" />
     </task>
     <task id="LOCAL-00001" summary="add threads, warehouse class, group class ,product class">
       <created>1590440685227</created>
@@ -292,7 +295,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592857977211</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="options in anon handlers">
+      <created>1592864748880</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1592864748880</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -327,7 +337,8 @@
     <MESSAGE value="buf fix" />
     <MESSAGE value="add producers" />
     <MESSAGE value="add categoryName for all queries" />
-    <option name="LAST_COMMIT_MESSAGE" value="add categoryName for all queries" />
+    <MESSAGE value="options in anon handlers" />
+    <option name="LAST_COMMIT_MESSAGE" value="options in anon handlers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

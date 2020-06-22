@@ -6,12 +6,18 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import java.lang.Exception
+import java.security.Key
 import java.util.*
+import javax.crypto.Cipher.SECRET_KEY
+import javax.crypto.spec.SecretKeySpec
 
 
 object JWTS {
     val algorithm = SignatureAlgorithm.HS256
-    val SECRET_KEY =  Keys.secretKeyFor(algorithm)
+   // val SECRET_KEY =  Keys.secretKeyFor(algorithm)
+    val key = "secret key for client server application"
+    val SECRET_KEY = key.toByteArray()
+    val signingKey: Key = SecretKeySpec(SECRET_KEY, algorithm.jcaName)
     val days = 1
 
     fun createJwt(user: User): String {
@@ -19,7 +25,7 @@ object JWTS {
                     .setIssuedAt(Date())
                     .claim("login", user.login)
                     .claim("role", user.role.name)
-                    .signWith( SECRET_KEY)
+                    .signWith( signingKey)
                     .setExpiration(Date(System.currentTimeMillis()+24*3_600_000*days))
         return buider.compact()
     }
