@@ -29,6 +29,7 @@ object Server {
             UriBinder(Method.GET, "/api/show/categories", GetAllCategories),
             UriBinder(Method.GET, "/api/show/goods", GetAllProducts),
             UriBinder(Method.GET, "/api/show/category/\\d+", GetCategoryHandler)
+
     )
     private val anonBinders = listOf(
             UriBinder(Method.PUT, "/login", LoginHandler),
@@ -41,8 +42,7 @@ object Server {
             UriBinder(Method.DELETE, "/api/good/\\d+", DeleteProductHandler),
             UriBinder(Method.PUT, "/api/category", PutCategoryHandler),
             UriBinder(Method.POST, "/api/category", PostCategoryHandler),
-            UriBinder(Method.DELETE, "/api/category/\\d+", DeleteCategoryHandler),
-            UriBinder(Method.OPTIONS, "/.*", OptionsHandler)
+            UriBinder(Method.DELETE, "/api/category/\\d+", DeleteCategoryHandler)
 
     )
 
