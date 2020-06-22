@@ -49,17 +49,37 @@ object ProductTable: IntIdTable(){
 
 
     private fun ResultRow.mapProduct() = Product(this[id].value, this[name], this[description], this[amount], this[price], this[category].value, this[producer])
+    private fun Product.addCategoryName(): Product {
+        val categoryName =  CategoryTable.nameById(category)!!
+        this.categoryName = categoryName
+        return this
+    }
+
     fun byCategory(id: Int): List<Product> {
         val name = CategoryTable.nameById(id)?: return emptyList<Product>()
         val products = transaction { select{ category eq id} }.map { it.mapProduct() }
         products.forEach { it.categoryName = name }
         return products
     }
-    fun byName(name: String) = transaction { select{ ProductTable.name eq name}.singleOrNull() ?.mapProduct() }
+
+    fun byName(name: String) = transaction { select{ ProductTable.name eq name}.singleOrNull() ?.mapProduct()?.addCategoryName() }
     fun hasName(name: String) = transaction { !select{ ProductTable.name eq name}.empty()}
-    fun byId(id: Int) = transaction { select{ ProductTable.id eq id}.singleOrNull()?.mapProduct() }
+
+    fun byId(id: Int) = transaction { select{ ProductTable.id eq id}.singleOrNull()?.mapProduct()?.addCategoryName() }
     fun hasId(id: Int) = transaction { !select{ ProductTable.id eq id}.empty() }
-    fun getAll(offset:Int, limit:Int) = transaction { selectAll().orderBy(name to SortOrder.ASC).limit(limit, offset = offset).map { it.mapProduct() } }
+
+    fun getAll(offset:Int = 0, limit:Int = -1): List<Product> {
+        val products = if(limit>0) transaction {  selectAll().orderBy(name to SortOrder.ASC).limit(n=limit, offset = offset).map { it.mapProduct() } }
+                        else transaction {  selectAll().orderBy(name to SortOrder.ASC).map { it.mapProduct() } }
+
+        val map = mutableMapOf<Int, String>()
+        products.forEach {
+            it.categoryName = map.getOrElse(it.category){
+                map[it.category] = CategoryTable.nameById(it.category)!!
+                return@getOrElse map[it.category]!!
+            } }
+        return products
+    }
 
     fun insert(product: Product) =
             transaction{
@@ -76,16 +96,7 @@ object ProductTable: IntIdTable(){
     fun delete(id: Int) = transaction { deleteWhere { ProductTable.id eq id } }
     fun deleteCategory(id: Int) = transaction { deleteWhere { ProductTable.category eq id } }
 
-    fun getAll(): List<Product> {
-            val products = transaction {  selectAll().orderBy(name to SortOrder.ASC).map { it.mapProduct() } }
-            val map = mutableMapOf<Int, String>()
-            products.forEach {
-                it.categoryName = map.getOrElse(it.category){
-                map[it.category] = CategoryTable.nameById(it.category)!!
-                return@getOrElse map[it.category]!!
-            } }
-        return products
-    }
+
 }
 data class Category(var id:Int?=null, var name:String, var description:String?=null,  var products: List<Product>?=null, var  totalCost:Double? = null)
 data class Product(var id:Int?=null, var name:String, var description:String?=null, var amount:Int=0, var price:Double, var category:Int, var producer: String, var categoryName:String? = null){
