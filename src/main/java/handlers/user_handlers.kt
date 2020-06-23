@@ -10,7 +10,7 @@ import org.apache.commons.codec.digest.DigestUtils
 import utils.JWTS
 import java.lang.Exception
 
-data class Token(@JsonProperty(Server.AUTHORIZATION_HEADER) val token:String)
+data class Token(@JsonProperty(Server.AUTHORIZATION_HEADER) val token:String, val login: String? = null, val role: Role?  = null)
 
 class UserException(message: String, code: Int) : ServerException(message,code)
 
@@ -20,7 +20,7 @@ object LoginHandler: UriHandler() {
         user.password = DigestUtils.md5Hex(user.password)
         val tableUser = UserTable.byLogin(user.login) ?:    throw UserException("no user with login '${user.login}'",401)
         if(tableUser.password!= user.password)              throw UserException("Incorrect password for this user", 401)
-        writeResponse(exchange, 200, Token(JWTS.createJwt(tableUser)))
+        writeResponse(exchange, 200, Token(JWTS.createJwt(tableUser), tableUser.login, tableUser.role))
 
     }
 }
@@ -31,7 +31,7 @@ object SignUpHandler: UriHandler(){
         if(UserTable.byLogin(user.login)!= null)            throw UserException("User already exists",409)
         user.id = UserTable.insert(user)
         user.role = Role.User
-        writeResponse(exchange,200, Token(JWTS.createJwt(user)))
+        writeResponse(exchange,200, Token(JWTS.createJwt(user), user.login, user.role))
     }
 
 }
@@ -68,13 +68,3 @@ object OptionsHandler: UriHandler(){
     }
 }
 
-object TokenHandler: UriHandler() {
-    override fun handleOrThrow(exchange: HttpExchange) {
-        val token = exchange.requestHeaders.getFirst(Server.AUTHORIZATION_HEADER) ?: throw ServerException("Permission denied: token not found", 403)
-        val claims = JWTS.decodeJwt(token)!!
-        if(JWTS.isExpired(claims)) throw Exception("Token is expired")
-        val role = JWTS.role(claims)
-        val login = JWTS.login(claims)
-        writeResponse(exchange, 200, User(login = login, role = role))
-    }
-}

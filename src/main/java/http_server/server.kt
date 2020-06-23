@@ -27,8 +27,7 @@ object Server {
     private val anonBinders = listOf(
             UriBinder(Method.PUT, "/login", LoginHandler),
             UriBinder(Method.PUT, "/signup", SignUpHandler),
-            UriBinder(Method.OPTIONS, "/.*", OptionsHandler),
-            UriBinder(Method.GET, "/token/.+", TokenHandler)
+            UriBinder(Method.OPTIONS, "/.*", OptionsHandler)
     )
     private val userBinders = listOf(
             UriBinder(Method.GET, "/api/show/good/\\d+", GetProductHandler),

@@ -5,6 +5,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/handlers/user_handlers.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/user_handlers.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/http_server/server.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/http_server/server.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/handlers/LoginHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/handlers/LoginHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/handlers/SignUpHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/handlers/SignUpHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/handlers/Token.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/handlers/Token.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/handlers/UserException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/handlers/UserException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/http_server/Server$createContext$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/http_server/Server$createContext$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/http_server/Server$publicAuthenticator$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/http_server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/http_server/Server.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -185,7 +192,8 @@
       <workItem from="1592922284548" duration="21000" />
       <workItem from="1592923467875" duration="875000" />
       <workItem from="1592925401725" duration="51000" />
-      <workItem from="1592949324586" duration="1028000" />
+      <workItem from="1592949324586" duration="1255000" />
+      <workItem from="1592951707284" duration="216000" />
     </task>
     <task id="LOCAL-00001" summary="add threads, warehouse class, group class ,product class">
       <created>1590440685227</created>
@@ -320,7 +328,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592922114232</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="token query">
+      <created>1592950524031</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1592950524031</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -358,7 +373,8 @@
     <MESSAGE value="options in anon handlers" />
     <MESSAGE value="add secret key" />
     <MESSAGE value="update dao code, add super admin" />
-    <option name="LAST_COMMIT_MESSAGE" value="update dao code, add super admin" />
+    <MESSAGE value="token query" />
+    <option name="LAST_COMMIT_MESSAGE" value="token query" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
