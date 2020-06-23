@@ -8,6 +8,7 @@ import dao.UserTable
 import http_server.Server
 import org.apache.commons.codec.digest.DigestUtils
 import utils.JWTS
+import java.lang.Exception
 
 data class Token(@JsonProperty(Server.AUTHORIZATION_HEADER) val token:String)
 
@@ -61,9 +62,19 @@ object OptionsHandler: UriHandler(){
     override fun handleOrThrow(exchange: HttpExchange) {
         exchange.responseHeaders.add("Access-Control-Allow-Origin", "*")
         exchange.responseHeaders.add( "Access-Control-Allow-Methods","POST, GET, OPTIONS, DELETE, PUT")
-        exchange.responseHeaders.add( "Access-Control-Allow-Headers","X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding, X-Auth-Token, content-type")
+        exchange.responseHeaders.add( "Access-Control-Allow-Headers","X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding, X-Auth-Token, content-type, access-control-allow-origin, authorization_token")
         exchange.sendResponseHeaders(200, -1)
         exchange.close()
     }
+}
 
+object TokenHandler: UriHandler() {
+    override fun handleOrThrow(exchange: HttpExchange) {
+        val token = exchange.requestHeaders.getFirst(Server.AUTHORIZATION_HEADER) ?: throw ServerException("Permission denied: token not found", 403)
+        val claims = JWTS.decodeJwt(token)!!
+        if(JWTS.isExpired(claims)) throw Exception("Token is expired")
+        val role = JWTS.role(claims)
+        val login = JWTS.login(claims)
+        writeResponse(exchange, 200, User(login = login, role = role))
+    }
 }

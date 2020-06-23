@@ -27,7 +27,8 @@ object Server {
     private val anonBinders = listOf(
             UriBinder(Method.PUT, "/login", LoginHandler),
             UriBinder(Method.PUT, "/signup", SignUpHandler),
-            UriBinder(Method.OPTIONS, "/.*", OptionsHandler)
+            UriBinder(Method.OPTIONS, "/.*", OptionsHandler),
+            UriBinder(Method.GET, "/token/.+", TokenHandler)
     )
     private val userBinders = listOf(
             UriBinder(Method.GET, "/api/show/good/\\d+", GetProductHandler),
@@ -59,7 +60,7 @@ object Server {
             return Success(anonymous)
         }
     }
-    private val publicAuthenticator = RoleAuthenticator { role: Role -> role >= Role.User }
+    private val userAuthenticator = RoleAuthenticator { role: Role -> role >= Role.User }
     private val adminAuthenticator = RoleAuthenticator { role: Role ->  role >= Role.Admin}
     private val superAdminAuthenticator = RoleAuthenticator{ role: Role ->  role >=  Role.SuperAdmin}
 
@@ -68,7 +69,7 @@ object Server {
         startDB()
         server = HttpServer.create(InetSocketAddress(PORT), BACKLOG)
         createContext("/", anonBinders, AnonymousPageException::class.simpleName!!, anonymousAuthenticator)
-        createContext("/api/show", userBinders, PublicPageException::class.simpleName!!, publicAuthenticator)
+        createContext("/api/show", userBinders, PublicPageException::class.simpleName!!, userAuthenticator)
         createContext("/api/", adminBinders, AdminPageException::class.simpleName!!, adminAuthenticator)
         createContext("/user", superAdminBinders, AdminPageException::class.simpleName!!, superAdminAuthenticator)
     }
