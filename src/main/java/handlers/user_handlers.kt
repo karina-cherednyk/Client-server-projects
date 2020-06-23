@@ -17,8 +17,8 @@ object LoginHandler: UriHandler() {
     override fun handleOrThrow(exchange: HttpExchange) {
         val user = mapper.readValue(exchange.requestBody, User::class.java)
         user.password = DigestUtils.md5Hex(user.password)
-        val tableUser = UserTable.byLogin(user.login) ?: throw UserException("no user with this login",401)
-        if(tableUser.password!= user.password) throw UserException("incorrect password for this user", 401)
+        val tableUser = UserTable.byLogin(user.login) ?:    throw UserException("no user with login '${user.login}'",401)
+        if(tableUser.password!= user.password)              throw UserException("Incorrect password for this user", 401)
         writeResponse(exchange, 200, Token(JWTS.createJwt(tableUser)))
 
     }
@@ -27,13 +27,36 @@ object SignUpHandler: UriHandler(){
     override fun handleOrThrow(exchange: HttpExchange) {
         val user = mapper.readValue(exchange.requestBody, User::class.java)
         user.password = DigestUtils.md5Hex(user.password)
-        if(UserTable.byLogin(user.login)!= null) throw UserException("user already exists",409)
+        if(UserTable.byLogin(user.login)!= null)            throw UserException("User already exists",409)
         user.id = UserTable.insert(user)
         user.role = Role.User
         writeResponse(exchange,200, Token(JWTS.createJwt(user)))
     }
 
 }
+
+object ChangeUserRoleHandler: UriHandler(){
+    override fun handleOrThrow(exchange: HttpExchange) {
+        val user = mapper.readValue(exchange.requestBody, User::class.java)
+        UserTable.updateRole(user)
+        writeResponse(exchange,204)
+    }
+}
+object DeleteUserHandler: UriHandler(){
+    override fun handleOrThrow(exchange: HttpExchange) {
+        val id = id(exchange)
+        if(!UserTable.hasId(id))                            throw UserException("No user with id $id", 404)
+        UserTable.delete(id)
+        writeResponse(exchange,204)
+    }
+}
+
+object GetAllUsersHandler: UriHandler(){
+    override fun handleOrThrow(exchange: HttpExchange) {
+        writeResponse(exchange,200, UserTable.getAll())
+    }
+}
+
 object OptionsHandler: UriHandler(){
     override fun handleOrThrow(exchange: HttpExchange) {
         exchange.responseHeaders.add("Access-Control-Allow-Origin", "*")

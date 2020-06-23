@@ -1,11 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c0e76950-79ca-411a-af04-c76cb257ab4b" name="Default Changelist" comment="фтщтньщгы Щ">
+    <list default="true" id="c0e76950-79ca-411a-af04-c76cb257ab4b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/http_server/RoleAuthenticator.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project01.iml" beforeDir="false" afterPath="$PROJECT_DIR$/project01.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/products.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/products.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/users.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/users.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/abstractions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/abstractions.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/product_handlers.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/product_handlers.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/user_handlers.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/user_handlers.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/http_server/server.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/http_server/server.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/utils/JWTS.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/JWTS.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store.db.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/store.db.mv.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store.db.mv.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/Category.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/Category.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/CategoryTable$byId$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/CategoryTable$byId$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/CategoryTable$byName$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/CategoryTable$byName$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/CategoryTable$delete$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/CategoryTable$delete$1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/CategoryTable$delete$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/CategoryTable$delete$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/CategoryTable$getAll$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/CategoryTable$getAll$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/CategoryTable$hasId$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/CategoryTable$hasId$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/CategoryTable$hasName$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/CategoryTable$hasName$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/CategoryTable$insert$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/CategoryTable$insert$1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/CategoryTable$insert$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/CategoryTable$insert$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/CategoryTable$update$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/CategoryTable$update$1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/CategoryTable$update$1$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/CategoryTable$update$1$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/CategoryTable$update$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/CategoryTable$update$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/CategoryTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/CategoryTable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/Product.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/Product.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ProductTable$amount$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ProductTable$amount$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ProductTable$byId$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ProductTable$byId$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ProductTable$byName$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ProductTable$byName$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ProductTable$delete$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ProductTable$delete$1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ProductTable$delete$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ProductTable$delete$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ProductTable$deleteCategory$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ProductTable$deleteCategory$1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ProductTable$deleteCategory$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ProductTable$deleteCategory$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ProductTable$hasId$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ProductTable$hasId$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ProductTable$hasName$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ProductTable$hasName$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ProductTable$insert$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ProductTable$insert$1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ProductTable$insert$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ProductTable$insert$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ProductTable$update$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ProductTable$update$1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ProductTable$update$1$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ProductTable$update$1$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ProductTable$update$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ProductTable$update$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ProductTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ProductTable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/Role.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/Role.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/UserTable$byId$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/UserTable$byId$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/UserTable$byLogin$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/UserTable$byLogin$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/UserTable$insert$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/UserTable$insert$1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/UserTable$insert$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/UserTable$insert$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/UserTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/UserTable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/handlers/DeleteCategoryHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/handlers/DeleteCategoryHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/handlers/DeleteProductHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/handlers/DeleteProductHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/handlers/GetAllCategories.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/handlers/GetCategoryHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/handlers/GetCategoryHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/handlers/GetProductHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/handlers/GetProductHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/handlers/LoginHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/handlers/LoginHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/handlers/SignUpHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/handlers/SignUpHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/handlers/UriBinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/handlers/UriBinder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/handlers/UriHandler$Companion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/handlers/UriHandler$Companion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/handlers/UriHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/handlers/UriHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/http_server/Server$adminAuthenticator$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/http_server/Server$adminAuthenticator$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/http_server/Server$anonymousAuthenticator$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/http_server/Server$anonymousAuthenticator$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/http_server/Server$createContext$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/http_server/Server$createContext$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/http_server/Server$publicAuthenticator$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/http_server/Server$publicAuthenticator$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/http_server/Server$startDB$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/http_server/Server$startDB$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/http_server/Server$startDB$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/http_server/Server$startDB$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/http_server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/http_server/Server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/http_server/ServerKt$main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/http_server/ServerKt$main$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/http_server/ServerKt.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/http_server/ServerKt.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/utils/JWTS.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/utils/JWTS.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/Practice5Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/Practice5Test.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -181,7 +247,8 @@
       <workItem from="1592780724639" duration="1846000" />
       <workItem from="1592857295239" duration="727000" />
       <workItem from="1592864621463" duration="334000" />
-      <workItem from="1592865139437" duration="1585000" />
+      <workItem from="1592865139437" duration="2807000" />
+      <workItem from="1592912175418" duration="9875000" />
     </task>
     <task id="LOCAL-00001" summary="add threads, warehouse class, group class ,product class">
       <created>1590440685227</created>
@@ -302,7 +369,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592864748880</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="add secret key">
+      <created>1592867846928</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1592867846928</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -338,7 +412,8 @@
     <MESSAGE value="add producers" />
     <MESSAGE value="add categoryName for all queries" />
     <MESSAGE value="options in anon handlers" />
-    <option name="LAST_COMMIT_MESSAGE" value="options in anon handlers" />
+    <MESSAGE value="add secret key" />
+    <option name="LAST_COMMIT_MESSAGE" value="add secret key" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -10,13 +10,11 @@ import com.sun.net.httpserver.HttpPrincipal
 import dao.*
 import handlers.*
 import org.apache.commons.codec.digest.DigestUtils
-import utils.JWTS
 import java.io.File
-import java.lang.Exception
 import java.net.InetSocketAddress
-import java.net.URI
 import java.nio.file.Paths
 import java.util.*
+
 
 
 object Server {
@@ -24,18 +22,21 @@ object Server {
     const val  PORT = 8080
     const val BACKLOG = 0
     val anonymous = HttpPrincipal("anonymous","anonymous")
-    private val publicBinders = listOf(
-            UriBinder(Method.GET, "/api/show/good/\\d+", GetProductHandler),
-            UriBinder(Method.GET, "/api/show/categories", GetAllCategories),
-            UriBinder(Method.GET, "/api/show/goods", GetAllProducts),
-            UriBinder(Method.GET, "/api/show/category/\\d+", GetCategoryHandler),
-            UriBinder(Method.OPTIONS, "/.*", OptionsHandler)
-    )
+
+
     private val anonBinders = listOf(
             UriBinder(Method.PUT, "/login", LoginHandler),
             UriBinder(Method.PUT, "/signup", SignUpHandler),
             UriBinder(Method.OPTIONS, "/.*", OptionsHandler)
     )
+    private val userBinders = listOf(
+            UriBinder(Method.GET, "/api/show/good/\\d+", GetProductHandler),
+            UriBinder(Method.GET, "/api/show/categories", GetAllCategoriesHandler),
+            UriBinder(Method.GET, "/api/show/goods", GetAllProductsHandler),
+            UriBinder(Method.GET, "/api/show/category/\\d+", GetCategoryHandler),
+            UriBinder(Method.OPTIONS, "/.*", OptionsHandler)
+    )
+
     private val adminBinders = listOf(
             UriBinder(Method.PUT, "/api/good", PutProductHandler),
             UriBinder(Method.POST, "/api/good", PostProductHandler),
@@ -46,51 +47,30 @@ object Server {
             UriBinder(Method.OPTIONS, "/.*", OptionsHandler)
 
     )
+    private val superAdminBinders = listOf(
+            UriBinder(Method.POST, "/user", ChangeUserRoleHandler),
+            UriBinder(Method.DELETE, "/user/\\d+", DeleteUserHandler),
+            UriBinder(Method.GET, "/users", GetAllUsersHandler),
+            UriBinder(Method.OPTIONS, "/.*", OptionsHandler)
+    )
 
-    private val publicAuthenticator = object:Authenticator(){
-        override fun authenticate(exchange: HttpExchange?): Result {
-            if(exchange!!.requestMethod == Method.OPTIONS.name) return Success(anonymous)
-            return try {
-                val token = exchange.requestHeaders.getFirst(AUTHORIZATION_HEADER) ?: throw Exception("Permission denied")
-               // val token = exchange.requestHeaders.getFirst(AUTHORIZATION_HEADER) ?: return Success(anonymous)
-                val claims = JWTS.decodeJwt(token)!!
-                if(JWTS.isExpired(claims)) throw Exception("Token is expired")
-                Success(HttpPrincipal(JWTS.login(claims), JWTS.role(claims)))
-            } catch (e: Exception){
-                UriHandler.writeResponse(exchange, 403, ErrorResponse(e::class.simpleName!!,e.message!!))
-                Failure(403)
-            }
-        }
-    }
     private val anonymousAuthenticator = object : Authenticator(){
         override fun authenticate(exch: HttpExchange?): Result {
             return Success(anonymous)
         }
     }
-    private val adminAuthenticator = object: Authenticator(){
-        override fun authenticate(exchange: HttpExchange?): Result {
-            if(exchange!!.requestMethod == Method.OPTIONS.name) return Success(anonymous)
-            return try {
-                val token = exchange!!.requestHeaders.getFirst(AUTHORIZATION_HEADER)
-                val claims = JWTS.decodeJwt(token)!!
-                if(JWTS.role(claims)!= Role.Admin.name) throw Exception("Permission denied")
-                Success(HttpPrincipal(JWTS.login(claims), JWTS.role(claims)))
-            } catch (e: Exception){
-                UriHandler.writeResponse(exchange!!, 403, ErrorResponse(e::class.simpleName!!,e.message!!))
-                Failure(403)
-            }
-        }
-
-    }
+    private val publicAuthenticator = RoleAuthenticator { role: Role -> role >= Role.User }
+    private val adminAuthenticator = RoleAuthenticator { role: Role ->  role >= Role.Admin}
+    private val superAdminAuthenticator = RoleAuthenticator{ role: Role ->  role >=  Role.SuperAdmin}
 
     var server: HttpServer
     init {
         startDB()
         server = HttpServer.create(InetSocketAddress(PORT), BACKLOG)
         createContext("/", anonBinders, AnonymousPageException::class.simpleName!!, anonymousAuthenticator)
+        createContext("/api/show", userBinders, PublicPageException::class.simpleName!!, publicAuthenticator)
         createContext("/api/", adminBinders, AdminPageException::class.simpleName!!, adminAuthenticator)
-        createContext("/api/show", publicBinders, PublicPageException::class.simpleName!!, publicAuthenticator)
-
+        createContext("/user", superAdminBinders, AdminPageException::class.simpleName!!, superAdminAuthenticator)
     }
     fun start() { server.start() ; println("Server started")}
     fun stop() { server.stop(1) ; println("Server stopped")}
@@ -105,7 +85,7 @@ object Server {
         Database.connect("jdbc:h2:./store.db", driver = "org.h2.Driver")
         transaction {  SchemaUtils.drop(UserTable, CategoryTable, ProductTable) } //remove
         transaction { SchemaUtils.create(UserTable, CategoryTable, ProductTable) }
-        UserTable.insert(User( login="admin", password = DigestUtils.md5Hex("admin"), role = Role.Admin))
+        UserTable.insert(User( login="admin", password = DigestUtils.md5Hex("admin"), role = Role.SuperAdmin))
 
 
 

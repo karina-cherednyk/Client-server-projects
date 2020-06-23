@@ -38,6 +38,10 @@ abstract class UriHandler: HttpHandler {
                 exchange.close()
             }catch (e : Exception){ println(e.message)}
         }
+        fun id(exchange: HttpExchange):Int{
+            val uri = exchange.requestURI.toString()
+            return  uri.substring(uri.lastIndexOf('/')+1).toInt()
+        }
     }
 
     @Throws(Exception::class)

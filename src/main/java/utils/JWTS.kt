@@ -1,14 +1,13 @@
 package utils
 
+import dao.Role
 import dao.User
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
-import io.jsonwebtoken.security.Keys
 import java.lang.Exception
 import java.security.Key
 import java.util.*
-import javax.crypto.Cipher.SECRET_KEY
 import javax.crypto.spec.SecretKeySpec
 
 
@@ -37,14 +36,14 @@ object JWTS {
 
     }
     @Throws(Exception::class)
-    fun role(jwt: Claims): String {
-        val role = jwt["role"]
+    fun role(claims: Claims): Role {
+        val role = claims["role"]
         if(role == null) throw Exception("no role claim")
-        else return role.toString()
+        else return Role.valueOf(role.toString())
     }
     @Throws(Exception::class)
-    fun login(jwt: Claims): String {
-        val login = jwt["login"]
+    fun login(claims: Claims): String {
+        val login = claims["login"]
         if(login == null) throw Exception("no login claim")
         else return login.toString()
     }

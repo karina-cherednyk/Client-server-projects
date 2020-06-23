@@ -1,3 +1,4 @@
+
 package dao
 
 import com.fasterxml.jackson.annotation.JsonIgnore
@@ -12,13 +13,13 @@ object CategoryTable: IntIdTable(){
     var description = text("description").nullable()
 
     fun ResultRow.mapCategory(): Category {
-        val products = ProductTable.byCategory(this[id].value)
+        val products = products(this[id].value, this[name])
         val cost = products.sumByDouble { it.amount*it.price }
         return Category(this[id].value, this[name], this[description], products, cost)
     }
 
     fun ResultRow.mapCategoryPartly()
-            = Category(this[id].value, this[name], this[description], products = null, totalCost = ProductTable.byCategory(this[id].value).sumByDouble { it.amount*it.price })
+            = Category(this[id].value, this[name], this[description], products = null, totalCost = products(this[id].value, this[name]).sumByDouble { it.amount*it.price })
 
     fun hasId(id: Int) = transaction { !select{ CategoryTable.id eq id}.empty() }
     fun hasName(name: String) = transaction { !select{ CategoryTable.name eq name}.empty()}
@@ -26,16 +27,22 @@ object CategoryTable: IntIdTable(){
             transaction{
                 insertAndGetId { it[name] = category.name; it[description] = category.description; }.value
             }
-    fun byId(id: Int) = transaction { select{ CategoryTable.id eq id}.singleOrNull()?.mapCategory() }
+    fun byId(id: Int):Category? = transaction {  select{ CategoryTable.id eq id}.singleOrNull()?.mapCategory()}
     fun byName(name: String) = transaction { select{ CategoryTable.name eq name}.singleOrNull()?.mapCategory() }
     fun delete(id: Int) {
         ProductTable.deleteCategory(id)
         transaction { deleteWhere { CategoryTable.id eq id } }
     }
     fun getAll() = transaction { selectAll().orderBy(name to SortOrder.ASC).map { it.mapCategoryPartly() }}
-    fun nameById(id: Int) = transaction { select { CategoryTable.id eq id }.singleOrNull()?.get(name) }
     fun update(category: Category) =
             transaction {   update({id eq category.id}) { it[name] = category.name; it[description] = category.description; }    }
+
+    fun products(id:Int, name:String): List<Product> {
+        val products = ProductTable.select { ProductTable.category eq id }.map { ProductTable.mapProduct(it) }
+        products.forEach { it.categoryName = name }
+        return products
+    }
+
 }
 
 object ProductTable: IntIdTable(){
@@ -48,38 +55,22 @@ object ProductTable: IntIdTable(){
     val producer = text("producer")
 
 
-    private fun ResultRow.mapProduct() = Product(this[id].value, this[name], this[description], this[amount], this[price], this[category].value, this[producer])
-    private fun Product.addCategoryName(): Product {
-        val categoryName =  CategoryTable.nameById(category)!!
-        this.categoryName = categoryName
-        return this
-    }
+    fun mapProduct(row: ResultRow) =  Product(row[id].value, row[name], row[description], row[amount], row[price], row[category].value, row[producer])
+    private fun ResultRow.map() = Product(this[id].value, this[name], this[description], this[amount], this[price], this[category].value, this[producer], this[CategoryTable.name])
 
-    fun byCategory(id: Int): List<Product> {
-        val name = CategoryTable.nameById(id)?: return emptyList<Product>()
-        val products = transaction { select{ category eq id} }.map { it.mapProduct() }
-        products.forEach { it.categoryName = name }
-        return products
-    }
-
-    fun byName(name: String) = transaction { select{ ProductTable.name eq name}.singleOrNull() ?.mapProduct()?.addCategoryName() }
+    fun byName(name: String) = transaction {join(CategoryTable, JoinType.INNER, additionalConstraint = { category eq CategoryTable.id}).select { ProductTable.name eq name }.singleOrNull()?.map() }
     fun hasName(name: String) = transaction { !select{ ProductTable.name eq name}.empty()}
 
-    fun byId(id: Int) = transaction { select{ ProductTable.id eq id}.singleOrNull()?.mapProduct()?.addCategoryName() }
+    fun byId(id: Int) =  transaction {join(CategoryTable, JoinType.INNER, additionalConstraint = { category eq CategoryTable.id}).select { ProductTable.id eq id }.singleOrNull()?.map() }
     fun hasId(id: Int) = transaction { !select{ ProductTable.id eq id}.empty() }
 
-    fun getAll(offset:Int = 0, limit:Int = -1): List<Product> {
-        val products = if(limit>0) transaction {  selectAll().orderBy(name to SortOrder.ASC).limit(n=limit, offset = offset).map { it.mapProduct() } }
-                        else transaction {  selectAll().orderBy(name to SortOrder.ASC).map { it.mapProduct() } }
-
-        val map = mutableMapOf<Int, String>()
-        products.forEach {
-            it.categoryName = map.getOrElse(it.category){
-                map[it.category] = CategoryTable.nameById(it.category)!!
-                return@getOrElse map[it.category]!!
-            } }
-        return products
-    }
+    fun getAll(offset:Int = 0, limit:Int=-1): List<Product> =
+            transaction {
+                val row =   join(CategoryTable, JoinType.INNER, additionalConstraint = { category eq CategoryTable.id})
+                        .selectAll().orderBy(name to SortOrder.ASC)
+                if(limit>0) row.limit(n=limit, offset = offset)
+                row.map { it.map() }
+            }
 
     fun insert(product: Product) =
             transaction{
@@ -95,8 +86,6 @@ object ProductTable: IntIdTable(){
 
     fun delete(id: Int) = transaction { deleteWhere { ProductTable.id eq id } }
     fun deleteCategory(id: Int) = transaction { deleteWhere { ProductTable.category eq id } }
-
-
 }
 data class Category(var id:Int?=null, var name:String, var description:String?=null,  var products: List<Product>?=null, var  totalCost:Double? = null)
 data class Product(var id:Int?=null, var name:String, var description:String?=null, var amount:Int=0, var price:Double, var category:Int, var producer: String, var categoryName:String? = null){

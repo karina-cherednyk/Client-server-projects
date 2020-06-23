@@ -58,8 +58,7 @@ object PostCategoryHandler: UriHandler() {
 
 object DeleteProductHandler: UriHandler(){
     override fun handleOrThrow(exchange: HttpExchange) {
-        val uri = exchange.requestURI.toString()
-        val id = uri.substring(uri.lastIndexOf('/')+1).toInt()
+        val id = id(exchange)
         if(!ProductTable.hasId(id))                     throw ProductException("Product not found", 404)
         ProductTable.delete(id)
         writeResponse(exchange,204)
@@ -67,8 +66,7 @@ object DeleteProductHandler: UriHandler(){
 }
 object DeleteCategoryHandler: UriHandler(){
     override fun handleOrThrow(exchange: HttpExchange) {
-        val uri = exchange.requestURI.toString()
-        val id = uri.substring(uri.lastIndexOf('/')+1).toInt()
+        val id = id(exchange)
         if(!CategoryTable.hasId(id))                     throw CategoryException("Category not found", 404)
         CategoryTable.delete(id)
         writeResponse(exchange,204)
@@ -77,26 +75,24 @@ object DeleteCategoryHandler: UriHandler(){
 
 object GetProductHandler: UriHandler() {
     override fun handleOrThrow(exchange: HttpExchange) {
-        val uri = exchange.requestURI.toString()
-        val id = uri.substring(uri.lastIndexOf('/')+1).toInt()
+        val id = id(exchange)
         val product = ProductTable.byId(id)?:           throw ProductException("Product with id $id not found", 404)
         writeResponse(exchange,200, product)
     }
 }
 object GetCategoryHandler: UriHandler() {
     override fun handleOrThrow(exchange: HttpExchange) {
-        val uri = exchange.requestURI.toString()
-        val id = uri.substring(uri.lastIndexOf('/')+1).toInt()
+        val id = id(exchange)
         val product = CategoryTable.byId(id)?:           throw CategoryException("Category with id $id not found", 404)
         writeResponse(exchange,200, product)
     }
 }
-object GetAllCategories: UriHandler(){
+object GetAllCategoriesHandler: UriHandler(){
     override fun handleOrThrow(exchange: HttpExchange) {
         writeResponse(exchange,200, CategoryTable.getAll())
     }
 }
-object GetAllProducts: UriHandler(){
+object GetAllProductsHandler: UriHandler(){
     override fun handleOrThrow(exchange: HttpExchange) {
         writeResponse(exchange,200, ProductTable.getAll())
     }
